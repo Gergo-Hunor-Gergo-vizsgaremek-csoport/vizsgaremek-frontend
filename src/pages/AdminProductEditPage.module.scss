@@ -1,0 +1,32 @@
+$leftMargin: 5px;
+$rightMargin: 5px;
+
+@mixin align-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: $rightMargin;
+}
+
+.root {
+
+  text-align: left;
+
+  img {
+    margin-left: $leftMargin;
+  }
+
+  p {
+    margin-left: $leftMargin;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    @include align-right;
+  }
+
+  h4 {
+    @include align-right;
+  }
+
+}

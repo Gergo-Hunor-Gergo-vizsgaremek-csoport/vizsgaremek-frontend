@@ -1,0 +1,40 @@
+.root{
+  border: black 1px solid;
+  height: 250px;
+  overflow: hidden;
+  padding: 5px;
+
+  img{
+    width: 100%;
+    height: 150px;
+  }
+
+  h1{
+    font-size: 25px;
+    margin: 5px 0;
+    text-align: center;
+  }
+
+  p{
+    font-size: 12px;
+    line-height: 13px;
+    text-align: left;
+  }
+
+  h3{
+    font-size: 15px;
+    text-align: right;
+  }
+
+
+  .clamp{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    line-clamp: 2;
+    overflow: hidden;
+  }
+
+}
+

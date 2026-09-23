@@ -1,0 +1,11 @@
+
+
+.root{
+  display: grid;
+
+  /* Responsive columns */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+  gap: 1rem;
+  padding: 1rem;
+}
