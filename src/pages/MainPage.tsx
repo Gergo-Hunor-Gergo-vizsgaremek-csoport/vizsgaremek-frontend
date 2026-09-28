@@ -1,11 +1,12 @@
-import {Link} from "react-router";
+//import {Link} from "react-router";
 
+
+import {NavBar} from "../components/NavBar.tsx";
 
 export function MainPage() {
     return (
         <>
-            <Link to={"/dev"}>dev</Link>
-            <Link to={"/product"}>product</Link>
+            <NavBar asd="asd" xd="xd"/>
         </>
     )
 }
