@@ -10,20 +10,23 @@ export function UserPage() {
     const services: Container = useContainer();
     const userService: UserService = services.get(UserService);
     const [data,setdata] = useState<UserReadDto[] | null>();
+
+    const [searchquery, setSearchquery] = useState("");
     async function Load()
     {
-        let result = await userService.search("a",10,0);
+        let result = await userService.search(searchquery,10,0);
+        console.log(searchquery);
         console.log("searchresult",result);
         setdata(result);
     }
 
     useEffect(() => {
         Load();
-    }, [])
+    }, [searchquery])
 
     return (
         <>
-        <NavBar/>
+        <NavBar onSearchQueryChange={setSearchquery} />
             <div className={styles.root}>
                 <table className={styles.maintable}>
                     <thead>
@@ -46,7 +49,7 @@ export function UserPage() {
                                 <td>{x.isUserAdmin.toString()}</td>
                             </tr>
                         )
-                        : <tr><td>"loading..."</td></tr> }
+                        : <tr></tr> }
                     </tbody>
                 </table>
             </div>
