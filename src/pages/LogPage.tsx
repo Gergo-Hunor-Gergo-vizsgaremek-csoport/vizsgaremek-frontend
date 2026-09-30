@@ -2,7 +2,7 @@ import {Container} from "inversify";
 import {NavBar} from "../components/NavBar.tsx";
 import {LogService} from "../services/LogService";
 import {useEffect, useState} from "react";
-import styles from "./UserPage.module.scss";
+import styles from "./LogPage.module.scss";
 import {useContainer} from "../services/ServiceContext.tsx";
 import type {LogReadDto} from "../dtos/LogReadDto.ts";
 
