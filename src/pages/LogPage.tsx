@@ -28,15 +28,23 @@ export function LogPage() {
 return (
     <>
         <NavBar onSearchQueryChange={setSearchquery} />
+        <div className={styles.root}>
             <table className={styles.maintable}>
+                <colgroup>
+                    <col width={'20%'}/>
+                    <col width={'20%'}/>
+                    <col width={'20%'}/>
+                    <col width={'20%'}/>
+                    <col width={'20%'}/>
+                </colgroup>
                 <thead>
-                <tr>
-                    <th style={{width:'25%'}}>id</th>
-                    <th style={{width:'10%'}}>type</th>
-                    <th style={{width:'25%'}}>message</th>
-                    <th style={{width:'15%'}}>datetime</th>
-                    <th style={{width:'10%'}}>userid</th>
-                </tr>
+                    <tr>
+                        <th> id</th>
+                        <th>type</th>
+                        <th>message</th>
+                        <th>datetime</th>
+                        <th>userid</th>
+                    </tr>
                 </thead>
                 <tbody>
                 {(data && data.length > 0)?
@@ -49,10 +57,10 @@ return (
                             <td>{x.userId}</td>
 
                         </tr>
-                    )
-                    : <tr></tr> }
+                    ) : <tr></tr> }
                 </tbody>
             </table>
+        </div>
     </>
 )
 }
