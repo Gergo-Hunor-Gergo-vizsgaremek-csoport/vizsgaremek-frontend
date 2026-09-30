@@ -1,7 +1,7 @@
 
 import {Route, Routes} from "react-router";
 import {DevPage} from "./pages/DevPage.tsx";
-import {MainPage} from "./pages/MainPage.tsx";
+import {TypeSearchPage} from "./pages/TypeSearchPage.tsx";
 import {AdminProductPage} from "./pages/AdminProductPage.tsx";
 import {AdminProductEditPage} from "./pages/AdminProductEditPage.tsx";
 import {UserPage} from "./pages/UserPage.tsx";
@@ -10,7 +10,7 @@ import {LogPage} from "./pages/LogPage.tsx";
 function App() {
   return (
       <Routes>
-          <Route path="/" element={<MainPage/>} />
+          <Route path="/" element={<TypeSearchPage/>} />
           <Route path="/dev" element={<DevPage/>}/>
           <Route path="/user" element={<UserPage/>}/>
           <Route path="/log" element={<LogPage/>}/>
