@@ -6,11 +6,13 @@ import {AdminProductPage} from "./pages/AdminProductPage.tsx";
 import {AdminProductEditPage} from "./pages/AdminProductEditPage.tsx";
 import {UserPage} from "./pages/UserPage.tsx";
 import {LogPage} from "./pages/LogPage.tsx";
+import {TypePage} from "./pages/TypePage.tsx";
 
 function App() {
   return (
       <Routes>
           <Route path="/" element={<TypeSearchPage/>} />
+          <Route path="/:typeId" element={<TypePage/>} />
           <Route path="/dev" element={<DevPage/>}/>
           <Route path="/user" element={<UserPage/>}/>
           <Route path="/log" element={<LogPage/>}/>

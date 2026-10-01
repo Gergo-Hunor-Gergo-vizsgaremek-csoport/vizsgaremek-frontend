@@ -4,12 +4,15 @@ import {Container} from "inversify";
 import styles from "./TypeSearchPage.module.scss";
 import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
 import {TypeService} from "../services/TypeService.ts";
 import {HighlightElements} from "../Highligher.ts";
 
 export function TypeSearchPage() {
     const services: Container = useContainer();
     const typeService: TypeService = services.get(TypeService);
+    const navigate = useNavigate();
+
     const [data,setdata] = useState<TypeReadDto[] | null>();
 
     const [searchquery, setSearchquery] = useState("");
@@ -36,6 +39,7 @@ export function TypeSearchPage() {
     function ClickedType(id:string)
     {
         console.log(id);
+        navigate(`/${id}`);
     }
 
     return (
