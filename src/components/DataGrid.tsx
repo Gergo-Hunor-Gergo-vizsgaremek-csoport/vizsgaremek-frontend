@@ -7,7 +7,7 @@ type DataGridProps<T extends object> = {
 
 export function DataGrid<T extends object>({ data }: DataGridProps<T>): JSX.Element {
     return (
-        <table className={styles.maintable}>
+        <table className={styles.root}>
             <thead>
             <tr>
                 {
