@@ -1,6 +1,7 @@
 import {ProductCardPresenter} from "../components/ProductCardPresenter.tsx";
 import {Lorem} from "../Constants.ts";
 import type {ProductReadDto} from "../dtos/ProductReadDto.ts";
+import {DataGrid} from "../components/DataGrid.tsx";
 
 let data: ProductReadDto[] = [
     {
@@ -55,6 +56,6 @@ export async function Alerter(promise: any){
 
 export function DevPage() {
     return (
-        <ProductCardPresenter products={data}/>
+        <DataGrid data={data}></DataGrid>
     )
 }
