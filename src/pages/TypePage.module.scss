@@ -1,32 +1,75 @@
-$leftMargin: 5px;
-$rightMargin: 5px;
+$fontsize: 10px;
 
-@mixin align-right {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: $rightMargin;
+@mixin buttonstyles
+{
+  font-size: $fontsize;
+  min-width: fit-content;
+  min-height: fit-content;
+  padding: 1vw 2vw;
+  margin: 1vw 2vw;
+  display:inline-block;
+  text-align:center;
+  color: black;
+  transition: 0.2s;
+  &:hover{
+    filter: brightness(80%);
+  }
 }
 
-.root {
 
-  text-align: left;
+.root
+{
 
-  img {
-    margin-left: $leftMargin;
+  font-size: $fontsize;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  height: 100%;
+  min-width: fit-content;
+  background-color: darkgray;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  color:black;
+
+  h1{
+    color: black;
   }
 
-  p {
-    margin-left: $leftMargin;
-    margin-top: 5px;
-    margin-bottom: 10px;
+
+  .backLink
+  {
+    text-decoration: none;
+  }
+  .backButton{
+    background-color: orange;
+    align-items: center;
+    justify-content: center;
+
+    @include buttonstyles;
   }
 
-  h2 {
-    @include align-right;
+
+  .mainDiv
+  {
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  h4 {
-    @include align-right;
+  .buttonDiv
+  {
+    margin-top:1em;
+    margin-right: 1px;
   }
 
+  .deleteButton
+  {
+    background-color: red;
+    @include buttonstyles;
+  }
+  .orderButton
+  {
+    background-color: green;
+    @include buttonstyles;
+  }
 }

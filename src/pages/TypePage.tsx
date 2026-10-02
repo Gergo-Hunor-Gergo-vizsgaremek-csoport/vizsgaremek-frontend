@@ -38,18 +38,25 @@ export function TypePage()
 
     return (
         <div className={styles.root}>
-            <Link to={`/`}>Back</Link>
-            <h1>{item?.name}</h1>
-            <img alt="image" src={item?.icon ?? "https://placehold.co/150"}/>
-            <p>{item?.description}</p>
-            <div>
-                <button onClick={async () => {
-                    if (!item?.id) throw new TypeError("Type not found!");
-                    console.log(`deleting ${item.id}`);
-                    await typeService.delete(item?.id)
-                    console.log(`deleted ${item?.id}`);
-                    navigate("/");
-                }}>Delete</button>
+            <Link className={styles.backLink} to={`/`}><button className={styles.backButton}>Vissza</button></Link>
+            <div className={styles.mainDiv}>
+                <h1>{item?.name}</h1>
+                <img alt="image" src={item?.icon ?? "https://placehold.co/150"}/>
+                <p>{item?.description}</p>
+                <div className={styles.buttonDiv}>
+                    <button className={styles.deleteButton} onClick={async () => {
+                        if (!item?.id) throw new TypeError("Nincs ilyen típus!");
+                        await typeService.delete(item?.id)
+                        console.log(`kitörölve: ${item?.id}`);
+                        navigate("/");
+                    }}>Törlés</button>
+                    <button className={styles.orderButton} onClick={async () => {
+                        if (!item?.id) throw new TypeError("Nincs ilyen típus!");
+                        await typeService.delete(item?.id)
+                        console.log(`kitörölve: ${item?.id}`);
+                        navigate("/");
+                    }}>Rendelés</button>
+                </div>
             </div>
         </div>
     )
