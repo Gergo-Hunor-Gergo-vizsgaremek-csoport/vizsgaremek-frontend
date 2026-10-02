@@ -14,8 +14,8 @@ export function HighlightElements(elements:HTMLElement[],searchquery:string) {
     {
         let id = text.toLowerCase().indexOf(searchquery.toLowerCase());
         let highlightedText = text.substring(0,id)
-            +`<strong style="background: red;color: white;font-weight: normal;">
-            ${text.substring(id,id+searchquery.length)}
+            +`<strong style="background: red;color: white; font-weight: normal">
+                ${text.substring(id,id+searchquery.length)}
             </strong>`
             +text.substring(id+searchquery.length,text.length);
         element.innerHTML = highlightedText;
