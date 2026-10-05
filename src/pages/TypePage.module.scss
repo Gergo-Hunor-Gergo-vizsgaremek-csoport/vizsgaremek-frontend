@@ -1,8 +1,5 @@
-$fontsize: 10px;
-
 @mixin buttonstyles
 {
-  font-size: $fontsize;
   min-width: fit-content;
   min-height: fit-content;
   padding: 1vw 2vw;
@@ -11,6 +8,7 @@ $fontsize: 10px;
   text-align:center;
   color: black;
   transition: 0.2s;
+
   &:hover{
     filter: brightness(80%);
   }
@@ -19,8 +17,6 @@ $fontsize: 10px;
 
 .root
 {
-
-  font-size: $fontsize;
   margin-left: auto;
   margin-right: auto;
   width: 60%;
