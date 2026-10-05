@@ -9,9 +9,7 @@ export class KolcsonzesService {
         private readonly api: ApiService)
     {}
 
-    async get(
-        id:string
-    ): Promise<KolcsonzesReadDto> {
-        return this.api.get<KolcsonzesReadDto>(`/Kolcsonzes/${id}`);
+    async get(): Promise<KolcsonzesReadDto[]> {
+        return this.api.get<KolcsonzesReadDto[]>("/Kolcsonzes");
     }
 }
