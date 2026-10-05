@@ -2,11 +2,11 @@ import {NavBar} from "../components/NavBar.tsx";
 import {UserService} from "../services/UserService";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {Container} from "inversify";
-import styles from "./UserPage.module.scss";
+import styles from "./UserAdminPage.module.scss";
 import type {UserReadDto} from "../dtos/UserReadDto.ts";
 import {useEffect, useState} from "react";
 
-export function UserPage() {
+export function UserAdminPage() {
     const services: Container = useContainer();
     const userService: UserService = services.get(UserService);
     const [data,setdata] = useState<UserReadDto[] | null>();
