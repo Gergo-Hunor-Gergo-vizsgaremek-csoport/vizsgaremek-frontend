@@ -22,4 +22,10 @@ export class UserService {
         ): Promise<UserReadDto> {
         return this.api.get<UserReadDto>(`/User/${id}`);
         }
+
+        async delete(
+            id: string
+        ): Promise<void> {
+            return this.api.delete(`/User/${id}`);
+        }
 }
