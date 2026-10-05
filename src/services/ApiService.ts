@@ -5,7 +5,7 @@ export class ApiService {
   private baseUrl = "http://localhost:5193";
 
   async get<T>(endpoint: string): Promise<T> {
-    console.log("GET", endpoint);
+    console.log("GET", `${this.baseUrl}${endpoint}`);
     let url = `${this.baseUrl}${endpoint}`;
     const response = await fetch(url);
 

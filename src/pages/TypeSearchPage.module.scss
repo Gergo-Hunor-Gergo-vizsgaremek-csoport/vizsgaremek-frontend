@@ -2,10 +2,13 @@
 {
   margin-left: auto;
   margin-right: auto;
+  overflow-x: scroll;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+
 
   .maintable
   {
-    table-layout: fixed;
     margin-left: auto;
     margin-right: auto;
     width: 80%;

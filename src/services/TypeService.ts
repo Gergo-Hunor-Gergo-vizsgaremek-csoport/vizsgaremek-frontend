@@ -22,4 +22,11 @@ export class TypeService {
     ): Promise<TypeReadDto> {
         return this.api.get<TypeReadDto>(`/Type/${id}`);
     }
+
+    async delete(
+        id: string
+    ): Promise<void> {
+        return this.api.delete(`/Type/${id}`);
+    }
+
 }
