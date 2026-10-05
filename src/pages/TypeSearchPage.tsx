@@ -39,7 +39,7 @@ export function TypeSearchPage() {
     function ClickedType(id:string)
     {
         console.log(id);
-        navigate(`/${id}`);
+        navigate(`/type/${id}`);
     }
 
     return (

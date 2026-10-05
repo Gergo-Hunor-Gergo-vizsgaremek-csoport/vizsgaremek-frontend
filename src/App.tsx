@@ -12,7 +12,7 @@ function App() {
   return (
       <Routes>
           <Route path="/" element={<TypeSearchPage/>} />
-          <Route path="/:typeId" element={<TypePage/>} />
+          <Route path="/type/:typeId" element={<TypePage/>} />
           <Route path="/dev" element={<DevPage/>}/>
           <Route path="/user" element={<UserPage/>}/>
           <Route path="/log" element={<LogPage/>}/>
