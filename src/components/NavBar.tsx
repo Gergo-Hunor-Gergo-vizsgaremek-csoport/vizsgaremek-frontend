@@ -18,6 +18,7 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
             <Link to={"/"}><button className={styles.navbutton}>Típusok Keresése</button></Link>
             <Link to={"/useradmin"}><button className={styles.navbutton}>Felhasználók</button></Link>
             <Link to={"/user/:AKTUALISUSERID"}><button className={styles.navbutton}>Aktuális felhasználó</button></Link>
+            <Link to={"/kolcsonzes"}><button className={styles.navbutton}>Kölcsönzések</button></Link>
             <Link to={"/log"}><button className={styles.navbutton}>Logok</button></Link>
         </div>
     )
