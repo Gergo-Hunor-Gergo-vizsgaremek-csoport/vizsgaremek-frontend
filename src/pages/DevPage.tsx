@@ -56,6 +56,7 @@ export async function Alerter(promise: any){
 
 export function DevPage() {
     return (
-        <DataGrid data={data}></DataGrid>
+        //komponensek tesztelése
+        <></>
     )
 }

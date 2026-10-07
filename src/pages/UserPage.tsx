@@ -5,16 +5,23 @@ import {Container} from "inversify";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {UserService} from "../services/UserService.ts";
 import styles from "./UserPage.module.scss";
+import type {KolcsonzesReadDto} from "../dtos/KolcsonzesReadDto.ts";
+import {DataGrid} from "../components/DataGrid.tsx";
+import type {RendelesReadDto} from "../dtos/RendelesReadDto.ts";
+import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
+import {NavBar} from "../components/NavBar.tsx";
 
 export function UserPage()
 {
     const {userId} = useParams();
 
-    const [user,setUser] = useState<UserReadDto>();
+    const [user,setUser] = useState<UserReadDto | null>();
 
     const services: Container = useContainer();
     const userService: UserService = services.get(UserService);
-    const [kolcsonzesek] = useState([1,2,3,4,5])
+    const [kolcsonzesek,setKolcsonzesek] = useState<KolcsonzesReadDto[]>([]);
+    const [rendelesek,setRendelesek] = useState<RendelesReadDto[]>([]);
+    const [felelossegek,setFelelossegek] = useState<PeldanyReadDto[]>([]);
 
     useEffect(() => {
         Load();
@@ -27,38 +34,27 @@ export function UserPage()
             return;
         }
 
-        let result = await userService.get(userId);
-
-        if (result)
+        let resultUser = await userService.get(userId);
+        if (!resultUser)
         {
-            setUser(result);
+            return;
         }
+        setUser(resultUser);
+
+        setKolcsonzesek( await userService.getKolcsonzesek(userId));
+        setRendelesek( await userService.getRendelesek(userId));
+        setFelelossegek( await userService.getFelelossegek(userId));
+
     }
 
     return (
         <div className={styles.root}>
-                <h1>{user?.name}</h1>
-                <h2>{user?.email}</h2>
-
-            <table className={styles.mainTable}>
-                <caption><h2>Kölcsönzések</h2></caption>
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th>userid</th>
-                    <th>expiration</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {kolcsonzesek.map(x=>
-                    <tr key={x}>
-                        <td>{x}</td>
-                        <td>{userId}</td>
-                        <td>{(new Date()).toISOString()}</td>
-                    </tr>
-                    )}
-                </tbody>
-            </table>
+            <NavBar onSearchQueryChange={() => {}}></NavBar>
+            <h1>{user?.name}</h1>
+            <h2>{user?.email}</h2>
+            <DataGrid data={kolcsonzesek} caption={"Kölcsönzések"}></DataGrid>
+            <DataGrid data={rendelesek} caption={"Rendelések"}></DataGrid>
+            <DataGrid data={felelossegek} caption={"Felelősségek"}></DataGrid>
         </div>
     )
 }

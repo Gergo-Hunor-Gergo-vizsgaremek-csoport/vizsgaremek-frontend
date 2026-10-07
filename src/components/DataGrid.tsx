@@ -2,12 +2,19 @@ import styles from "./DataGrid.module.scss"
 import  {type JSX} from "react";
 
 type DataGridProps<T extends object> = {
+    caption: string,
     data: T[],
 }
 
-export function DataGrid<T extends object>({ data }: DataGridProps<T>): JSX.Element {
+export function DataGrid<T extends object>({ data, caption }: DataGridProps<T>): JSX.Element {
+
+    if (data.length === 0) {
+        return (<></>);
+    }
     return (
-        <table className={styles.root}>
+        <div className={styles.root}>
+        <table>
+            <caption><h2>{caption}</h2></caption>
             <thead>
             <tr>
                 {
@@ -24,5 +31,6 @@ export function DataGrid<T extends object>({ data }: DataGridProps<T>): JSX.Elem
                 : <tr></tr> }
             </tbody>
         </table>
+        </div>
     );
 }

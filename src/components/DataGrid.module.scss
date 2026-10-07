@@ -1,17 +1,36 @@
-.root{
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
+.root
+{
+  overflow-x: auto;
+  max-width: 80%;
+  margin: 2vh auto;
 
-  border-collapse: collapse;
-
-  border: solid 1px;
-
-  td{
-    border: solid 1px;
+  table {
+    justify-self: center;
+    align-self: center;
+    color: #FAFAFA;
+    border-collapse: collapse;
+    text-align: center;
   }
-  th{
-    border: solid 1px;
+  th, caption
+  {
+    background: black;
+    font-weight: bold;
   }
+
+  td
+  {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    padding: 1rem;
+  }
+  tr:nth-child(odd)
+  {
+    background: #606060;
+  }
+  tr:nth-child(even)
+  {
+    background: #404040;
+  }
+
 }
 
