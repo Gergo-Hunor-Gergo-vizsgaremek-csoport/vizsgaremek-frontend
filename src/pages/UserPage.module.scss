@@ -1,34 +1,3 @@
 .root
 {
-  margin: 0 auto;
-
-  .mainTable
-  {
-    overflow: auto;
-    width: 80%;
-    margin: 0 auto;
-    color: #FAFAFA;
-    border-collapse: collapse;
-    text-align: center;
-  }
-
-  th, caption
-  {
-    background: black;
-  }
-  td
-  {
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-    padding: 1rem;
-  }
-  tr:nth-child(odd)
-  {
-    background: #606060;
-  }
-  tr:nth-child(even)
-  {
-    background: #404040;
-  }
-
 }
