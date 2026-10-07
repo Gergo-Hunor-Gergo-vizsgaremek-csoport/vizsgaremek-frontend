@@ -7,11 +7,13 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {TypeService} from "../services/TypeService.ts";
 import {HighlightElements} from "../Highligher.ts";
+import {PeldanySzuroModalPage} from "../components/PeldanySzuroModalPage.tsx";
 
 export function TypeSearchPage() {
     const services: Container = useContainer();
     const typeService: TypeService = services.get(TypeService);
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
 
     const [data,setdata] = useState<TypeReadDto[] | null>();
 
@@ -74,6 +76,15 @@ export function TypeSearchPage() {
                         : <tr></tr> }
                     </tbody>
                 </table>
+                <button onClick={() => setIsOpen(true)}>Modal Megnyitása</button>
+
+                <PeldanySzuroModalPage
+                    isOpen={isOpen}
+                    onClose={() => setIsOpen(false)}
+                    title="Példány Szűrő"
+                >
+                    <p>SZŐKECIGAAAAAAAAAAAAAAAAAAAANY OÁOÁOÁ</p>
+                </PeldanySzuroModalPage>
             </div>
         </>
     )
