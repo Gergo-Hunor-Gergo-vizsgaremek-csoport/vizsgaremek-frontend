@@ -1,6 +1,7 @@
 import {inject, injectable} from "inversify";
 import { ApiService } from "./ApiService";
 import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
+import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
 
 @injectable()
 export class TypeService {
@@ -27,6 +28,12 @@ export class TypeService {
         id: string
     ): Promise<void> {
         return this.api.delete(`/Type/${id}`);
+    }
+
+    async getPeldanyok(
+        id: string
+    ):Promise<PeldanyReadDto[]> {
+        return this.api.get<PeldanyReadDto[]>(`/Type/${id}/peldanyok`);
     }
 
 }
