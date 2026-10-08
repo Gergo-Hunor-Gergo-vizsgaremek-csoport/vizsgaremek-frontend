@@ -5,6 +5,7 @@
   font-size: max(2vw, 2vh);
   text-align: center;
   min-width: fit-content;
+  margin: 1vh 1vw;
 }
 
 .root
@@ -28,7 +29,7 @@
   {
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     align-items: flex-end;
   }

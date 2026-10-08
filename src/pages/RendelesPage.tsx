@@ -60,11 +60,14 @@ export function RendelesPage() {
         <p>USERID: {rendeles?.userId}</p>
         <p>Típus: {typeName}</p>
         <p>DATE: {rendeles?.date.toString()}</p>
-        <p>Teljesített: {rendeles?.completedQuantity}/{rendeles?.quantity}</p>
+        <p>Hozzárendelt: {rendeles?.completedQuantity}/{rendeles?.quantity}</p>
+
         <button onClick={() => {
             setIsOpen(true);
         }}>Hozzárendelés</button>
         <dialog className={styles.hozzarendelosDialog} ref={dialogRef} onClose={() =>setIsOpen(false)}>
+            <p>Hozzárendelt: {((rendeles?.completedQuantity)?rendeles.completedQuantity:0)+selectedPeldanys.length}/{rendeles?.quantity}</p>
+
             {peldanys?.map(x=>
                 <div data-peldanyId={x.id} key={x.id} className={styles.peldanyDiv}
                      onClick={(e) =>{
@@ -79,8 +82,10 @@ export function RendelesPage() {
             )}
             <div className={styles.buttonDiv}>
                 <button className={styles.cancelButton} onClick={() =>setIsOpen(false)}>Mégse</button>
+
+                <button className={styles.okButton}>Példánygenerálás</button>
+
                 <button className={styles.okButton} onClick={() =>setIsOpen(false)}>Megerősítés</button>
-                <button className={styles.okButton} onClick={() => console.log(selectedPeldanys)}>asd</button>
             </div>
         </dialog>
         </div>
