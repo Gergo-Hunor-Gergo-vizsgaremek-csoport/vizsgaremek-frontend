@@ -1,0 +1,39 @@
+@mixin buttonStyles
+{
+  width: 20vw;
+  height: 10vh;
+  font-size: max(2vw, 2vh);
+  text-align: center;
+  min-width: fit-content;
+  margin: 1vh 1vw;
+}
+
+//[open] enélkül nélkül akkor is megjelenik ha be van zárva
+.root[open] {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  height: 80vh;
+
+  .peldanyDiv {
+    background-color: lightgray;
+  }
+
+  .buttonDiv {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: flex-end;
+  }
+
+  .cancelButton {
+    @include buttonStyles;
+    background-color: red;
+  }
+
+  .okButton {
+    @include buttonStyles;
+    background-color: green;
+  }
+}
