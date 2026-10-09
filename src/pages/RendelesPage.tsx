@@ -46,8 +46,8 @@ export function RendelesPage() {
             setIsOpen(true);
         }}>Hozzárendelés</button>
             {
-                (rendeles?.typeId)?
-                <RendelesHozzarendelDialog isOpen={isOpen} setIsOpen={setIsOpen} typeId={rendeles?.typeId}/>
+                (rendeles)?
+                <RendelesHozzarendelDialog isOpen={isOpen} setIsOpen={setIsOpen} typeId={rendeles.typeId} quantity={1}/>
                     :<p>Nincs ilyen rendelés</p>
             }
         </div>

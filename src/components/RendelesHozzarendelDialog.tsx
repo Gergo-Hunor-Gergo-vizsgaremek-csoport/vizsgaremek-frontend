@@ -9,9 +9,10 @@ interface RendelesHozzarendelDialogProps {
     isOpen: boolean;
     setIsOpen: (newValue :boolean) => void;
     typeId: string;
+    quantity: number;
 }
 
-export function RendelesHozzarendelDialog({isOpen, setIsOpen, typeId}: RendelesHozzarendelDialogProps) {
+export function RendelesHozzarendelDialog({isOpen, setIsOpen, typeId, quantity}: RendelesHozzarendelDialogProps) {
 
     const services = useContainer();
     const typeService = services.get(TypeService);
@@ -49,20 +50,26 @@ export function RendelesHozzarendelDialog({isOpen, setIsOpen, typeId}: RendelesH
 
     return (
         <dialog className={styles.root} ref={dialogRef} onClose={() =>setIsOpen(false)}>
-            <p>Hozzárendelt: {selectedPeldanys.length}</p>
+            <p>Hozzárendelt: {selectedPeldanys.length}/{quantity}</p>
 
             {peldanys?.map(x=>
                 <div key={x.id} className={styles.peldanyDiv}
                      onClick={(e) =>{
-                         if (!selectedPeldanys.map(y=>y.id).includes(x.id))
+                         if (selectedPeldanys.map(y=>y.id).includes(x.id))
                          {
-                             setSelectedPeldanys([...selectedPeldanys,x]);
-                             e.currentTarget.style.backgroundColor="green"
+                             //listából kivétel
+                             setSelectedPeldanys(prev => prev.filter(y=>y.id !== x.id));
+                             e.currentTarget.style.backgroundColor="lightgray"
+                         }
+                         else if (quantity == selectedPeldanys.length) {
+                             alert("Rendelési mennyiség elérve! Nem adhatsz többet hozzá!")
+                             return;
                          }
                          else
                          {
-                             e.currentTarget.style.backgroundColor="lightgray"
-                             setSelectedPeldanys(prev => prev.filter(y=>y.id !== x.id));
+                             //hozzáadás
+                             setSelectedPeldanys([...selectedPeldanys,x]);
+                             e.currentTarget.style.backgroundColor="green"
                          }
                      }}
                 >
