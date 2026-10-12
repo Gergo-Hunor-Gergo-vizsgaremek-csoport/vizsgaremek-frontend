@@ -62,7 +62,7 @@ export function TypePage()
                         await rendelesService.post(
                             {
                                 typeId : item.id,
-                                userId : "e69f3176-7ad1-4811-9bd6-5f1791b82012",
+                                userId : "d2587282-1005-4015-af61-ee59fb4547b3",
                                 date : new Date(),
                                 quantity : quantity,
                                 completedQuantity : 0
