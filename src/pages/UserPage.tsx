@@ -66,7 +66,7 @@ export function UserPage()
     return (
         <div className={styles.root}>
             <NavBar onSearchQueryChange={() => {}}></NavBar>
-            <h1>{user?.name}</h1>
+            <h1>{user?.username}</h1>
             <h2>{user?.email}</h2>
             <DataGrid data={kolcsonzesek} caption={"Kölcsönzések"} clickEvent={KolcsonzesClick}></DataGrid>
             <DataGrid data={rendelesek} caption={"Rendelések"} clickEvent={RendelesClick}></DataGrid>
