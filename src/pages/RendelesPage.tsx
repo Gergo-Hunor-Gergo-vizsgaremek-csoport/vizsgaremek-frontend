@@ -1,5 +1,5 @@
 import {useParams} from "react-router";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import type {RendelesReadDto} from "../dtos/RendelesReadDto.ts";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {RendelesService} from "../services/RendelesService.ts";
@@ -14,6 +14,7 @@ export function RendelesPage() {
     const typeService = services.get(TypeService);
     const {rendelesId} = useParams();
     const [rendeles,setRendeles] = useState<RendelesReadDto>();
+    let rendelesRef = useRef<RendelesReadDto>(rendeles);
     const [typeName,setTypeName] = useState<string>("");
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -28,14 +29,16 @@ export function RendelesPage() {
         setRendeles(resultRendeles);
         let resultType:TypeReadDto = await typeService.get(resultRendeles.typeId);
         setTypeName(resultType.name);
+        rendelesRef.current = rendeles;
     }
 
     useEffect(() => {
         Load();
-    }, []);
+    }, [isOpen]);
 
     return (
         <div className={styles.root}>
+
         <p>ID: {rendeles?.id}</p>
         <p>USERID: {rendeles?.userId}</p>
         <p>Típus: {typeName}</p>
@@ -46,9 +49,10 @@ export function RendelesPage() {
             setIsOpen(true);
         }}>Hozzárendelés</button>
             {
-                (rendeles)?
+            (rendeles)?
                 <RendelesHozzarendelDialog isOpen={isOpen} setIsOpen={setIsOpen} rendeles={rendeles}/>
-                    :<p>Nincs ilyen rendelés</p>
+            :
+            <p>Nincs ilyen rendelés</p>
             }
         </div>
     )

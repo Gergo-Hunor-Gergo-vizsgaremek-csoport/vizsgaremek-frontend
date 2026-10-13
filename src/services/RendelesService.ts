@@ -3,6 +3,7 @@ import {ApiService} from "./ApiService.ts";
 import type {RendelesReadDto} from "../dtos/RendelesReadDto.ts";
 import type {RendelesWriteDto} from "../dtos/RendelesWriteDto.ts";
 import type {KolcsonzesWriteDto} from "../dtos/KolcsonzesWriteDto.ts";
+import type {KolcsonzesReadDto} from "../dtos/KolcsonzesReadDto.ts";
 
 @injectable()
 export class RendelesService {
@@ -29,7 +30,7 @@ export class RendelesService {
         rendelesWriteDto: RendelesWriteDto,
     )
     {
-        return this.api.put<RendelesWriteDto>(`/Rendeles/${id}`, rendelesWriteDto);
+        return this.api.put<RendelesReadDto>(`/Rendeles/${id}`, rendelesWriteDto);
     }
 
     async assignKolcsonzesek(
@@ -37,6 +38,6 @@ export class RendelesService {
         kolcsonzesWriteDtos: KolcsonzesWriteDto[],
     )
     {
-        return this.api.post<KolcsonzesWriteDto[]>(`/Rendeles/${id}/assign`, kolcsonzesWriteDtos);
+        return this.api.post<KolcsonzesReadDto[]>(`/Rendeles/${id}/assign`, kolcsonzesWriteDtos);
     }
 }
