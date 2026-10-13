@@ -6,6 +6,7 @@ import styles from "./UserAdminPage.module.scss";
 import type {UserReadDto} from "../dtos/UserReadDto.ts";
 import {useEffect, useState} from "react";
 import {DataGrid} from "../components/DataGrid.tsx";
+import {useNavigate} from "react-router";
 
 export function UserAdminPage() {
     const services: Container = useContainer();
@@ -13,6 +14,8 @@ export function UserAdminPage() {
     const [data,setdata] = useState<UserReadDto[] | null>();
 
     const [searchquery, setSearchquery] = useState("");
+
+    const navigate = useNavigate();
     async function Load()
     {
         let result = await userService.search(searchquery,10,0);
@@ -25,9 +28,9 @@ export function UserAdminPage() {
         Load();
     }, [searchquery])
 
-    function UserClick()
+    function UserClick(id:string)
     {
-
+        navigate(`/User/${id}`);
     }
 
     return (
