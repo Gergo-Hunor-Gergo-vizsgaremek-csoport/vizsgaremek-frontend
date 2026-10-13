@@ -6,6 +6,7 @@ import {useContainer} from "../services/ServiceContext.tsx";
 import type {RendelesReadDto} from "../dtos/RendelesReadDto.ts";
 import type {KolcsonzesWriteDto} from "../dtos/KolcsonzesWriteDto.ts";
 import {RendelesService} from "../services/RendelesService.ts";
+import type {RendelesWriteDto} from "../dtos/RendelesWriteDto.ts";
 
 
 interface RendelesHozzarendelDialogProps {
@@ -51,8 +52,14 @@ export function RendelesHozzarendelDialog({isOpen, setIsOpen, rendeles}: Rendele
         }
         await rendelesService.assignKolcsonzesek(rendeles.id,kolcsonzesek);
 
-        rendeles.completedQuantity = selectedPeldanys.length;
-        await rendelesService.put(rendeles.id, rendeles);
+        let rendelesWriteDto: RendelesWriteDto = {
+            typeId: rendeles.typeId,
+            userId: rendeles.userId,
+            date: rendeles.date,
+            quantity: rendeles.quantity,
+            completedQuantity: rendeles.completedQuantity + selectedPeldanys.length
+        }
+        await rendelesService.put(rendeles.id, rendelesWriteDto);
         setIsOpen(false);
         ResetSelectedPeldanys();
         await Load();

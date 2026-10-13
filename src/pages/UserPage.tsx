@@ -1,4 +1,4 @@
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import type {UserReadDto} from "../dtos/UserReadDto.ts";
 import {Container} from "inversify";
@@ -22,6 +22,7 @@ export function UserPage()
     const [kolcsonzesek,setKolcsonzesek] = useState<KolcsonzesReadDto[]>([]);
     const [rendelesek,setRendelesek] = useState<RendelesReadDto[]>([]);
     const [felelossegek,setFelelossegek] = useState<PeldanyReadDto[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         Load();
@@ -47,14 +48,29 @@ export function UserPage()
 
     }
 
+    function KolcsonzesClick()
+    {
+        navigate("/kolcsonzes/");
+    }
+    function RendelesClick(id: string)
+    {
+        console.log(id);
+        navigate(`/rendeles/${id}`);
+    }
+    function FelelossegClick()
+    {
+        navigate("/kolcsonzes/");
+    }
+
+
     return (
         <div className={styles.root}>
             <NavBar onSearchQueryChange={() => {}}></NavBar>
             <h1>{user?.name}</h1>
             <h2>{user?.email}</h2>
-            <DataGrid data={kolcsonzesek} caption={"Kölcsönzések"}></DataGrid>
-            <DataGrid data={rendelesek} caption={"Rendelések"}></DataGrid>
-            <DataGrid data={felelossegek} caption={"Felelősségek"}></DataGrid>
+            <DataGrid data={kolcsonzesek} caption={"Kölcsönzések"} clickEvent={KolcsonzesClick}></DataGrid>
+            <DataGrid data={rendelesek} caption={"Rendelések"} clickEvent={RendelesClick}></DataGrid>
+            <DataGrid data={felelossegek} caption={"Felelősségek"} clickEvent={FelelossegClick}></DataGrid>
         </div>
     )
 }

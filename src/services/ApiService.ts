@@ -33,7 +33,7 @@ export class ApiService {
     return response.json();
   }
 
-  async put<T>(endpoint: string, data: unknown): Promise<T> {
+  async put<T>(endpoint: string, data: unknown): Promise<T | null> {
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       method: "PUT",
       headers: {
@@ -45,7 +45,9 @@ export class ApiService {
     if (!response.ok) {
       throw new Error(`Request failed: ${response.status}`);
     }
-
+    if (response.status === 204) {
+      return null;
+    }
     return response.json();
   }
 

@@ -4,9 +4,10 @@ import  {type JSX} from "react";
 type DataGridProps<T extends object> = {
     caption: string,
     data: T[],
+    clickEvent: (id: string) => void,
 }
 
-export function DataGrid<T extends object>({ data, caption }: DataGridProps<T>): JSX.Element {
+export function DataGrid<T extends object>({ data, caption, clickEvent }: DataGridProps<T>): JSX.Element {
 
     if (data.length === 0) {
         return (<></>);
@@ -26,7 +27,7 @@ export function DataGrid<T extends object>({ data, caption }: DataGridProps<T>):
             <tbody>
             {(data && data.length > 0)?
                 data.map(x=>
-                    <tr>{Object.values(x).map(v => <td>{String(v)}</td>)}</tr>
+                    <tr onClick={() => clickEvent(Object.values(x)[0]) }>{Object.values(x).map(v => <td>{String(v)}</td>)}</tr>
                 )
                 : <tr></tr> }
             </tbody>
