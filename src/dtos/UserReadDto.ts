@@ -1,6 +1,6 @@
 export interface UserReadDto {
     id: string;
-    name: string;
+    username: string;
     email: string;
     isSysAdmin: boolean;
     isDeviceAdmin: boolean;
