@@ -68,9 +68,12 @@ export function UserPage()
             <NavBar onSearchQueryChange={() => {}}></NavBar>
             <h1>{user?.username}</h1>
             <h2>{user?.email}</h2>
-            <DataGrid data={kolcsonzesek} caption={"Kölcsönzések"} clickEvent={KolcsonzesClick}></DataGrid>
-            <DataGrid data={rendelesek} caption={"Rendelések"} clickEvent={RendelesClick}></DataGrid>
-            <DataGrid data={felelossegek} caption={"Felelősségek"} clickEvent={FelelossegClick}></DataGrid>
+            <DataGrid data={kolcsonzesek} caption={"Kölcsönzések"} clickEvent={KolcsonzesClick}/>
+            <DataGrid data={rendelesek} caption={"Rendelések"} clickEvent={RendelesClick}
+            showColums={[true,false,false]} />
+
+            <DataGrid data={felelossegek} caption={"Felelősségek"} clickEvent={FelelossegClick}
+                      showColums={[true,true,true,true,true,true,true,true,true,false,false,false,false]} />
         </div>
     )
 }
