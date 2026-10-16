@@ -39,7 +39,7 @@ export function UserAdminPage() {
             <div className={styles.root}>
                 {
                     (data)?
-                <DataGrid caption={"Felhasználók"} data={data} clickEvent={UserClick}/>
+                <DataGrid caption={"Felhasználók"} data={data} clickEvent={UserClick} showColums={[false,true,true]}/>
                         :
                         <p>Betöltés...</p>
                 }

@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {TypeService} from "../services/TypeService.ts";
 import {HighlightElements} from "../Highligher.ts";
+import {DataGrid} from "../components/DataGrid.tsx";
 
 export function TypeSearchPage() {
     const services: Container = useContainer();
@@ -44,36 +45,14 @@ export function TypeSearchPage() {
 
     return (
         <>
-            <NavBar onSearchQueryChange={setSearchquery}/>
+            <NavBar onSearchQueryChange={setSearchquery} />
             <div className={styles.root}>
-                <table className={styles.maintable}>
-                    <colgroup>
-                        <col width={'25%'}/>
-                        <col width={'25%'}/>
-                        <col width={'25%'}/>
-                        <col width={'25%'}/>
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>name</th>
-                        <th>description</th>
-                        <th>icon</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {(data && data.length > 0)?
-                        data.map(x=>
-                            <tr key={x.id} id={x.id} onClick={e=>ClickedType(e.currentTarget.id)}>
-                                <td>{x.id}</td>
-                                <td data-text={x.name}>{x.name}</td>
-                                <td>{x.description}</td>
-                                <td>{x.icon}</td>
-                            </tr>
-                        )
-                        : <tr></tr> }
-                    </tbody>
-                </table>
+                {
+                    (data)?
+                        <DataGrid caption={"Típusok"} data={data} clickEvent={ClickedType} showColums={[false,true,true]}/>
+                        :
+                        <p>Betöltés...</p>
+                }
             </div>
         </>
     )
