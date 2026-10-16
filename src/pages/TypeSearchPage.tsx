@@ -46,14 +46,12 @@ export function TypeSearchPage() {
     return (
         <>
             <NavBar onSearchQueryChange={setSearchquery} />
-            <div className={styles.root}>
                 {
                     (data)?
                         <DataGrid caption={"Típusok"} data={data} clickEvent={ClickedType} showColums={[false,true,true]}/>
                         :
                         <p>Betöltés...</p>
                 }
-            </div>
         </>
     )
 }
