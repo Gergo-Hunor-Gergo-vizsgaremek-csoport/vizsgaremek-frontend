@@ -77,14 +77,12 @@ export function TypeSearchPage() {
                     </tbody>
                 </table>
                 <button onClick={() => setIsOpen(true)}>Modal Megnyitása</button>
-
                 <PeldanySzuroModalPage
                     isOpen={isOpen}
                     onClose={() => setIsOpen(false)}
+                    typeId={"1"}
                     title="Példány Szűrő"
-                >
-                    <p>SZŐKECIGAAAAAAAAAAAAAAAAAAAANY OÁOÁOÁ</p>
-                </PeldanySzuroModalPage>
+                />
             </div>
         </>
     )

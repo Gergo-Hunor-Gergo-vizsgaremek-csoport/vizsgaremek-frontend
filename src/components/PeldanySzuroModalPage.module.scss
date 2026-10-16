@@ -1,0 +1,71 @@
+.root
+{
+  position: fixed;
+  backgroundColor: white;
+  color: black;
+  display: flex;
+  text-align: center;
+  alignItems: center;
+  justifyContent: center;
+  zIndex: 1000;
+
+  .card
+  {
+    backgroundColor: white;
+    color: black;
+    borderRadius: 8px;
+    padding: 24px;
+    width: 100%;
+    boxShadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    maxWidth: 500px;
+    display: flex;
+    flexDirection: column;
+    gap: 16px;
+
+    .header
+    {
+      background: white;
+      display: flex;
+      justifyContent: space-between;
+      alignItems: center;
+      borderBottom: 1px solid #eee;
+      paddingBottom: 12px;
+
+      .closeButton
+      {
+        background: red;
+        text: "Close";
+        border-radius: 24px;
+        fontSize: 24px;
+        cursor: pointer;
+        color: black;
+      }
+    }
+
+    .content
+    {
+      background: white;
+      fontSize: 14px;
+      color: black;
+    }
+
+    .bottom
+    {
+      background: white;
+      padding: 8px 16px;
+      borderRadius: 4px;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+
+      .cancelButton
+      {
+        padding: 8px 16px;
+        borderRadius: 4px;
+        border: 1px solid #ccc;
+        background: black;
+        cursor: pointer;
+      }
+    }
+  }
+}

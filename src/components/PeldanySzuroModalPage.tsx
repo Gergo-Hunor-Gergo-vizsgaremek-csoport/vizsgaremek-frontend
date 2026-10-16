@@ -1,38 +1,43 @@
+//import type {TypeReadDto} from "../dtos/TypeReadDto";
+import styles from "./PeldanySzuroModalPage.module.scss";
 
 export interface PeldanySzuroModalPageProps {
+    typeId: string;
     isOpen: boolean;
     onClose: () => void;
     title?: string;
-    children: React.ReactNode;
 }
 
-export const PeldanySzuroModalPage: React.FC<PeldanySzuroModalPageProps> = ({ isOpen, onClose, title, children }) => {
+export const PeldanySzuroModalPage: React.FC<PeldanySzuroModalPageProps> = ({ isOpen, onClose, title}) => {
 
     if (!isOpen) return null;
 
     return (
-        // Sötétített háttér (Overlay) - Ha rá-kattintanak, bezárja a modalt
-        <div style={overlayStyle} onClick={onClose}>
+        <div className={styles.root}>
+
             {/* Modal kártya - e.stopPropagation() megakadályozza, hogy a belső kattintás bezárja */}
-            <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.card} onClick={(e) => e.stopPropagation()}>
 
                 {/* Fejléc címke és bezáró X gomb */}
-                <div style={headerStyle}>
+                <div className={styles.header}>
                     <h3>{title || 'Modal Cím'}</h3>
-                    <button onClick={onClose} style={closeButtonStyle}>
-                        &times;
-                    </button>
+                    <button onClick={onClose} className={styles.closeButton}>X</button>
                 </div>
 
-                {/* Belső tartalom (Children) */}
-                <div style={bodyStyle}>
-                    {children}
+                {/* Belső tartalom*/}
+                <div className={styles.content}>
+                    <form>
+                        <label htmlFor="property1">Példány tulajdonság 1:</label><br/>
+                        <input type="text" id="property1" name="property1" value="tulajdonság..."/><br/>
+                        <label htmlFor="property2">Példány tulajdonság 2:</label><br/>
+                        <input type="text" id="property2" name="property2" value="tulajdonság..."/>
+                    </form>
                 </div>
 
-                {/* Lábjéc akciógombokkal */}
-                <div style={footerStyle}>
-                    <button onClick={onClose} style={cancelButtonStyle}>
-                        Bezárás
+                {/* Lábléc gombbal */}
+                <div className={styles.bottom}>
+                    <button onClick={onClose} className={styles.cancelButton}>
+                        Mégse
                     </button>
                 </div>
 
@@ -40,65 +45,3 @@ export const PeldanySzuroModalPage: React.FC<PeldanySzuroModalPageProps> = ({ is
         </div>
     );
 }
-
-const overlayStyle: React.CSSProperties = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Féláttetsző sötét háttér
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
-};
-
-const modalContentStyle: React.CSSProperties = {
-    backgroundColor: '#ffffff',
-    borderRadius: '8px',
-    padding: '24px',
-    width: '100%',
-    maxWidth: '500px',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-};
-
-const headerStyle: React.CSSProperties = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottom: '1px solid #eee',
-    paddingBottom: '12px',
-};
-
-const bodyStyle: React.CSSProperties = {
-    fontSize: '14px',
-    color: '#333',
-};
-
-const footerStyle: React.CSSProperties = {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    gap: '8px',
-    borderTop: '1px solid #eee',
-    paddingTop: '12px',
-};
-
-const closeButtonStyle: React.CSSProperties = {
-    background: 'none',
-    border: 'none',
-    fontSize: '24px',
-    cursor: 'pointer',
-    color: '#666',
-};
-
-const cancelButtonStyle: React.CSSProperties = {
-    padding: '8px 16px',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    background: '#f5f5f5',
-    cursor: 'pointer',
-};
