@@ -5,46 +5,64 @@
   padding: 1vw 2vw;
   margin: 1vw 2vw;
   display:inline-block;
+  justify-self: center;
   text-align:center;
-  color: black;
+  color: white;
   transition: 0.2s;
+  width: 30vw;
 
   &:hover{
     filter: brightness(80%);
   }
 }
 
+//number input nyilak elrejtése
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+
 
 .root
 {
   margin-left: auto;
   margin-right: auto;
-  width: 60%;
+  width: 80%;
   height: 100%;
   min-width: fit-content;
   background-color: darkgray;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  color:black;
+  color: white;
 
   h1{
-    color: black;
+    color: white;
   }
 
-
-  .backLink
+  .buttonDiv
   {
-    text-decoration: none;
-  }
-  .backButton{
-    background-color: orange;
-    align-items: center;
-    justify-content: center;
-
-    @include buttonstyles;
+    margin-top:1em;
+    margin-left: auto;
+    margin-right: auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 
+  .quantityInput{
+    width: 5vw;
+    height: 3vh;
+    justify-self: center;
+    align-self: end;
+    text-align: center;
+  }
 
   .mainDiv
   {
@@ -52,11 +70,7 @@
     margin-right: auto;
   }
 
-  .buttonDiv
-  {
-    margin-top:1em;
-    margin-right: 1px;
-  }
+
 
   .deleteButton
   {
