@@ -1,35 +1,76 @@
+$fontsize: 16px;
+
 .root{
-  display: grid;
-  background-color: lightblue;
-  border-radius: 0% 0% 25px 25px;
-  width: 80%;
-  height: 5%;
+  background-color: #404040;;
+  width: fit-content;
+  height: fit-content;
   margin-left: auto;
   margin-right: auto;
+  padding-right: 1vw;
+  font-size: $fontsize;
 
-  /* Responsive columns */
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-
-  gap: 1rem;
-  padding: 1rem;
-
-  @mixin navmembers
+  input[type="text"]
   {
-    width: 100%;
-    height: 100%;
-    padding: 10px ;
-    text-align: center;
-    box-sizing: border-box;
+    font-size: $fontsize;
+    border: none;
+    padding-left: 10px;
   }
 
   .navsearch
   {
-    @include navmembers;
+    box-sizing: border-box;
+    display: flex;
+    float: right;
+    margin-left: 5vw;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    text-align: center;
+    height: 4vh;
+    min-height: 30px;
   }
 
-  .navbutton
+  .searchicon
   {
-    @include navmembers;
-    background-color:forestgreen;
+    align-content: center;
+    background-color: #606060;
+    width: 4vh;
+    height: 4vh;
+    margin-left: 4px;
+    min-width: 30px;
+    min-height: 30px;
+  }
+
+  a
+  {
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    color: white;
+    background-color: #404040;
+    display: block;
+    margin: 0;
+    float: left;
+    padding: 0.5vh 1vw;
+    height: 5vh;
+    box-sizing: border-box;
+    min-height: 30px;
+  }
+
+  a:hover
+  {
+    background-color: #505050;
+  }
+
+  @media (max-width: 900px)
+  {
+    a
+    {
+      float: none;
+    }
+    .navsearch
+    {
+      float: none;
+      margin-left: 1vw;
+    }
   }
 }

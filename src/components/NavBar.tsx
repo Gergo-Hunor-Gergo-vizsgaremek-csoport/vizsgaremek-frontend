@@ -1,4 +1,3 @@
-import {Link} from "react-router";
 import styles from "./NavBar.module.scss"
 
 interface NavBarProps {
@@ -13,13 +12,17 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
 
     // módosítani kell ha majd lesz bejelentkezés funckció (AKTUALISUSERID-t le kell cserélni egy változóra)
     return (
-        <div className={styles.root}>
-            <input type={"text"} className={styles.navsearch} onChange={e=>SearchChange(e.target.value)} placeholder={"Keresés"}/>
-            <Link to={"/"}><button className={styles.navbutton}>Típusok Keresése</button></Link>
-            <Link to={"/useradmin"}><button className={styles.navbutton}>Felhasználók</button></Link>
-            <Link to={"/user/:AKTUALISUSERID"}><button className={styles.navbutton}>Aktuális felhasználó</button></Link>
-            <Link to={"/kolcsonzes"}><button className={styles.navbutton}>Kölcsönzések</button></Link>
-            <Link to={"/log"}><button className={styles.navbutton}>Logok</button></Link>
-        </div>
+        <nav className={styles.root}>
+            <div className={styles.navsearch}><input type={"text"} onChange={e=>SearchChange(e.target.value)} placeholder={"Keresés"}>
+            </input>
+            <i className={`material-icons ${styles.searchicon}`}>search</i>
+            </div>
+
+            <a href={"/"}>Típusok keresése</a>
+               <a href={"/useradmin"}>Felhasználók</a>
+               <a href={"/user/:AKTUALISUSERID"}>Aktuális felhasználó</a>
+               <a href={"/kolcsonzes"}>Kölcsönzések</a>
+               <a href={"/log"}>Logok</a>
+        </nav>
     )
 }
