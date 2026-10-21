@@ -16,7 +16,7 @@ function App() {
       <Routes>
           <Route path="/" element={<TypeSearchPage/>} />
           <Route path="/type/:typeId" element={<TypePage/>} />
-          <Route path="/peldany" element={<PeldanyPage/>} />
+          <Route path="/peldany/:peldanyTypeId" element={<PeldanyPage/>} />
           <Route path="/dev" element={<DevPage/>}/>
           <Route path="/useradmin" element={<UserAdminPage/>}/>
           <Route path="/user/:userId" element={<UserPage/>}/>

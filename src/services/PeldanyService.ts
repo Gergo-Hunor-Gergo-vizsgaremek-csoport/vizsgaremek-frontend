@@ -20,9 +20,9 @@ export class PeldanyService {
     }
 
     async get(
-        id:string
+        typeId:string
     ): Promise<PeldanyReadDto> {
-        return this.api.get<PeldanyReadDto>(`/Peldany/${id}`);
+        return this.api.get<PeldanyReadDto>(`/Peldany/by-type/${typeId}`);
     }
 
     /*async update(
