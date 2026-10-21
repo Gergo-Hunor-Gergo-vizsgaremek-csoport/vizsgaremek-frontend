@@ -25,6 +25,7 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
                <a href={"/user/:AKTUALISUSERID"}>Aktuális felhasználó</a>
                <a href={"/kolcsonzes"}>Kölcsönzések</a>
                <a href={"/log"}>Logok</a>
+               <a href={"/login"}>Bejelentkezés</a>
         </nav>
     )
 }

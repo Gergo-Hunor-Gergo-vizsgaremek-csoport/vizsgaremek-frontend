@@ -1,0 +1,35 @@
+.root
+{
+  margin-right: auto;
+  margin-left: auto;
+  gap: 1vw;
+
+  .loginDiv
+  {
+    margin: auto;
+    width: max(50vw,300px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1
+  {
+    margin-bottom: 2vw;
+  }
+
+  .loginButton
+  {
+    width: 15vw;
+    height: 5vw;
+    align-self: center;
+  }
+
+  .loginInput
+  {
+    margin-bottom: 3vh;
+    text-align: center;
+    height: max(3vw);
+    width: max(20vw,200px);
+    align-self: center;
+  }
+}

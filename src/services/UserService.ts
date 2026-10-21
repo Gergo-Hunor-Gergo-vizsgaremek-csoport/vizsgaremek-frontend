@@ -26,6 +26,13 @@ export class UserService {
         return this.api.get<UserReadDto>(`/User/${id}`);
         }
 
+        async login(
+            email:string,
+            password:string,
+        ): Promise<void> {
+            return this.api.post(`/auth/login`,{email:email,password:password});
+        }
+
         async delete(
             id: string
         ): Promise<void> {

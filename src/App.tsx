@@ -9,6 +9,7 @@ import {LogPage} from "./pages/LogPage.tsx";
 import {TypePage} from "./pages/TypePage.tsx";
 import {UserPage} from "./pages/UserPage.tsx";
 import {RendelesPage} from "./pages/RendelesPage.tsx";
+import {LoginPage} from "./pages/LoginPage.tsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/user/:userId" element={<UserPage/>}/>
           <Route path="/rendeles/:rendelesId" element={<RendelesPage/>}/>
           <Route path="/log" element={<LogPage/>}/>
+          <Route path="/login" element={<LoginPage/>}/>
           <Route path="/product" element={<AdminProductPage/>}/>
           <Route path="/product/:productId" element={<AdminProductEditPage />} />
       </Routes>
