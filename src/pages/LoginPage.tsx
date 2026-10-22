@@ -9,14 +9,14 @@ export function LoginPage() {
 
     const services:Container= useContainer();
     const userService:UserService = services.get(UserService)
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password,setPassword] = useState("");
 
     async function SendLogin()
     {
         try
         {
-            await userService.login(email,password);
+            await userService.login(username,password);
             alert("Sikeres bejelentkezés!");
         }
         catch(e)
@@ -30,8 +30,8 @@ export function LoginPage() {
             <NavBar/>
             <div className={styles.loginDiv}>
                 <h1>Bejelentkezés</h1>
-                <input className={styles.loginInput} name={"email"} value={email} onChange={(e) => setEmail(e.currentTarget.value)} id="email" type="email" placeholder="Email"/>
-                <input className={styles.loginInput} name={"password"} value={password} onChange={(e) => setPassword(e.currentTarget.value)} id="password" type="password" placeholder="Jelszó" />
+                <input className={styles.loginInput} name={"username"} value={username} onChange={(e) =>setUsername(e.currentTarget.value)} type="text" placeholder="Felhasználónév"/>
+                <input className={styles.loginInput} name={"password"} value={password} onChange={(e) => setPassword(e.currentTarget.value)} type="password" placeholder="Jelszó" />
                 <button onClick={SendLogin} className={styles.loginButton}>Bejelentkezés</button>
             </div>
         </div>

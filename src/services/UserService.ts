@@ -27,10 +27,10 @@ export class UserService {
         }
 
         async login(
-            email:string,
+            username: string,
             password:string,
         ): Promise<void> {
-            return this.api.post(`/auth/login`,{email:email,password:password});
+            return this.api.post(`/auth/login`,{email:username,password:password}); //bugos a backend keretrendszer, ezért az email a felhasználónév
         }
 
         async delete(
