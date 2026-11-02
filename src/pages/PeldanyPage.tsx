@@ -13,9 +13,10 @@ export function PeldanyPage()
     const services: Container = useContainer();
     const peldanyService: PeldanyService = services.get(PeldanyService);
     const {peldanyTypeId} = useParams();
-    const [data, setData] = useState<PeldanyReadDto | null>(null);
+    const [data, setData] = useState<PeldanyReadDto[] | null>([]);
 
     useEffect(() => {
+        console.log("Fut a cuccos!");
         load();
     }, [peldanyTypeId])
 
@@ -52,12 +53,13 @@ export function PeldanyPage()
                     </tr>
                     </thead>
                     <tbody>
-                    {(data)?
-                            <tr key={data.typeId.toString()}>
-                                <td>{data.typeId.toString()}</td>
-                                <td>{data.description.toString()}</td>
-                                <td>{data.addDate.toString()}</td>
-                            </tr>:
+                    {(data && data.length > 0)?
+                        data.map(item =>
+                            <tr key={item.typeId.toString()}>
+                                <td>{item.typeId.toString()}</td>
+                                <td>{item.description.toString()}</td>
+                                <td>{item.addDate.toString()}</td>
+                            </tr>):
                         <tr> </tr>}
                     </tbody>
                 </table>
