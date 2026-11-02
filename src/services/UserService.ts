@@ -26,6 +26,13 @@ export class UserService {
         return this.api.get<UserReadDto>(`/User/${id}`);
         }
 
+        async login(
+            username: string,
+            password:string,
+        ): Promise<void> {
+            return this.api.post<void>(`/auth/login?useCookies=true`,{email:username,password:password}); //bugos a backend keretrendszer, ezért az email a felhasználónév
+        }
+
         async delete(
             id: string
         ): Promise<void> {

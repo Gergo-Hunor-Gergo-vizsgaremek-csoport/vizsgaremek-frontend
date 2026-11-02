@@ -1,13 +1,15 @@
 import styles from "./NavBar.module.scss"
 
 interface NavBarProps {
-    onSearchQueryChange: (query: string) => void;
+    onSearchQueryChange?: (query: string) => void;
 }
 
 export function NavBar({onSearchQueryChange}: NavBarProps) {
     function SearchChange(query: string)
     {
-        onSearchQueryChange(query);
+        if (onSearchQueryChange) {
+            onSearchQueryChange(query);
+        }
     }
 
     // módosítani kell ha majd lesz bejelentkezés funckció (AKTUALISUSERID-t le kell cserélni egy változóra)
@@ -23,6 +25,7 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
                <a href={"/user/:AKTUALISUSERID"}>Aktuális felhasználó</a>
                <a href={"/kolcsonzes"}>Kölcsönzések</a>
                <a href={"/log"}>Logok</a>
+               <a href={"/login"}>Bejelentkezés</a>
         </nav>
     )
 }

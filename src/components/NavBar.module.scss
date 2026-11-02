@@ -8,6 +8,7 @@ $fontsize: 16px;
   margin-right: auto;
   padding-right: 1vw;
   font-size: $fontsize;
+  display: flow-root;
 
   input[type="text"]
   {
