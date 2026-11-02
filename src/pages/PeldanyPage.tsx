@@ -21,17 +21,6 @@ export function PeldanyPage()
     }, [peldanyTypeId])
 
     async function load() {
-        /*if(!peldanyTypeId)
-        {
-            return;
-        }
-
-        let data = await peldanyService.get(peldanyTypeId);
-        if (data.typeId === "37e33fde-b5ba-4c2a-9735-b6da49070c97")
-        {
-            setData(data);
-        }*/
-
         console.log("Kapott paraméter az URL-ből:", peldanyTypeId);
         if (!peldanyTypeId) return;
 
