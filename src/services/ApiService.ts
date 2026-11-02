@@ -24,12 +24,17 @@ export class ApiService {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      credentials: "include",
     });
 
     if (!response.ok) {
       throw new Error(`Request failed: ${response.status}`);
     }
 
+    if (response.headers.get("content-length") == "0")
+    {
+      return undefined as T;
+    }
     return response.json();
   }
 

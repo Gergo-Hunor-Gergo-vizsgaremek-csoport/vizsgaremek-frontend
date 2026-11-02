@@ -30,7 +30,7 @@ export class UserService {
             username: string,
             password:string,
         ): Promise<void> {
-            return this.api.post(`/auth/login`,{email:username,password:password}); //bugos a backend keretrendszer, ezért az email a felhasználónév
+            return this.api.post<void>(`/auth/login?useCookies=true`,{email:username,password:password}); //bugos a backend keretrendszer, ezért az email a felhasználónév
         }
 
         async delete(

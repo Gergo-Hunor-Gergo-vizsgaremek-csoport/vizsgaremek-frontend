@@ -21,6 +21,7 @@ export function LoginPage() {
         }
         catch(e)
         {
+            console.log(e);
             alert("Valami szörnyű dolog történt!");
         }
     }
