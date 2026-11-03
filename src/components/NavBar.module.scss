@@ -1,14 +1,32 @@
 $fontsize: 16px;
 
+@mixin navbarItemMixin
+{
+  text-align: center;
+  align-content: center;
+  color: white;
+  display: block;
+  padding: 0.5vh 1vw;
+  box-sizing: border-box;
+  height: 5vh;
+  width: fit-content;
+  text-wrap: nowrap;
+
+  &:hover {
+    filter: brightness(120%)  ;
+  }
+}
+
 .root{
   background-color: #404040;;
-  width: fit-content;
-  height: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  padding-right: 1vw;
   font-size: $fontsize;
-  display: flow-root;
+  display: flex;
+  justify-content: center;
+  //overflow-x: auto;
+  a{
+    text-decoration: none;
+    color: white;
+  }
 
   input[type="text"]
   {
@@ -21,8 +39,6 @@ $fontsize: 16px;
   {
     box-sizing: border-box;
     display: flex;
-    float: right;
-    margin-left: 5vw;
     margin-top: 0.5vh;
     margin-bottom: 0.5vh;
     text-align: center;
@@ -41,37 +57,28 @@ $fontsize: 16px;
     min-height: 30px;
   }
 
-  a
+  .navbarItem
   {
-    text-align: center;
-    align-content: center;
-    text-decoration: none;
-    color: white;
+    @include navbarItemMixin;
     background-color: #404040;
-    display: block;
-    margin: 0;
-    float: left;
-    padding: 0.5vh 1vw;
-    height: 5vh;
-    box-sizing: border-box;
-    min-height: 30px;
   }
 
-  a:hover
+  .navbarDropdownItem
   {
-    background-color: #505050;
+    @include navbarItemMixin;
+    background-color: #606060;
+    width: 100%;
+
+    &:nth-child(2){
+      background-color: #404040;
+    }
   }
 
-  @media (max-width: 900px)
+  .personIcon
   {
-    a
-    {
-      float: none;
-    }
-    .navsearch
-    {
-      float: none;
-      margin-left: 1vw;
-    }
+    width:100%;
+    height:100%;
+    align-content:center;
   }
+
 }
