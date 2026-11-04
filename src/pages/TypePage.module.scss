@@ -82,4 +82,10 @@ input[type=number] {
     background-color: green;
     @include buttonstyles;
   }
+
+  .peldanyButton
+  {
+    background-color: blue;
+    @include buttonstyles;
+  }
 }

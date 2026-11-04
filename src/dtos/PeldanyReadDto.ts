@@ -1,5 +1,6 @@
 export interface PeldanyReadDto {
     id: string;
+    typeId: string;
     description: string;
     addDate: Date;
     manufacturingDate?: Date;

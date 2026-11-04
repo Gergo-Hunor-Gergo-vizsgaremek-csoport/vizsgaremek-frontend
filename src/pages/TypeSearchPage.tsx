@@ -1,7 +1,7 @@
 import {NavBar} from "../components/NavBar.tsx";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {Container} from "inversify";
-import styles from "./TypeSearchPage.module.scss";
+//import styles from "./TypeSearchPage.module.scss";
 import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";

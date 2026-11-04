@@ -7,6 +7,7 @@ import {AdminProductEditPage} from "./pages/AdminProductEditPage.tsx";
 import {UserAdminPage} from "./pages/UserAdminPage.tsx";
 import {LogPage} from "./pages/LogPage.tsx";
 import {TypePage} from "./pages/TypePage.tsx";
+import {PeldanyPage} from "./pages/PeldanyPage.tsx";
 import {UserPage} from "./pages/UserPage.tsx";
 import {RendelesPage} from "./pages/RendelesPage.tsx";
 import {LoginPage} from "./pages/LoginPage.tsx";
@@ -16,6 +17,7 @@ function App() {
       <Routes>
           <Route path="/" element={<TypeSearchPage/>} />
           <Route path="/type/:typeId" element={<TypePage/>} />
+          <Route path="/peldany/by-type/:peldanyTypeId" element={<PeldanyPage/>} />
           <Route path="/dev" element={<DevPage/>}/>
           <Route path="/useradmin" element={<UserAdminPage/>}/>
           <Route path="/user/:userId" element={<UserPage/>}/>
