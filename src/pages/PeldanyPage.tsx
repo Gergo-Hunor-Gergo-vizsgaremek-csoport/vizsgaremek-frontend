@@ -2,11 +2,11 @@ import {useEffect, useState} from "react";
 import {Container} from "inversify";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {PeldanyService} from "../services/PeldanyService.ts";
-//import styles from "./PeldanyPage.module.scss";
-//import {DataGrid} from "../components/DataGrid.tsx";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
-import styles from "./PeldanyPage.module.scss";
+//import styles from "./PeldanyPage.module.scss";
 import {useParams} from "react-router";
+import {NavBar} from "../components/NavBar.tsx";
+import {DataGrid} from "../components/DataGrid.tsx";
 
 export function PeldanyPage()
 {
@@ -34,7 +34,7 @@ export function PeldanyPage()
     }
 
     return (
-        <>
+        /*<>
             <div className={styles.root}>
                 <table className={styles.maintable}>
                     <thead>
@@ -53,6 +53,16 @@ export function PeldanyPage()
                     </tbody>
                 </table>
             </div>
+        </>*/
+
+        <>
+            <NavBar onSearchQueryChange={setSearchquery} />
+            {
+                (data)?
+                    <DataGrid caption={"Típusok"} data={data} clickEvent={ClickedType} showColums={[false,true,true]}/>
+                    :
+                    <p>Betöltés...</p>
+            }
         </>
     )
 }

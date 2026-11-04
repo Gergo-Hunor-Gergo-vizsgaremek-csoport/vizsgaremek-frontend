@@ -4,7 +4,7 @@ import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
 //import type {PeldanyUpdateDto} from "../dtos/PeldanyUpdateDto.ts";
 
 @injectable()
-export class PeldanyService {
+export class SingleService {
     constructor(
         @inject(ApiService)
         private readonly api: ApiService)
