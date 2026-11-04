@@ -17,7 +17,9 @@ export class ApiService {
   }
 
   async post<T>(endpoint: string, data: unknown): Promise<T> {
-    console.log(JSON.stringify(data));
+    if (import.meta.env.DEV){
+      console.log(JSON.stringify(data));
+    }
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       method: "POST",
       headers: {
