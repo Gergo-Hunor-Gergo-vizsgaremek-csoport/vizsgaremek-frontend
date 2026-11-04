@@ -4,10 +4,12 @@ import {useContainer} from "../services/ServiceContext.tsx";
 import {Container} from "inversify";
 import {UserService} from "../services/UserService.ts";
 import {useState} from "react";
+import {useLogin} from "../services/LoginContext.tsx";
 
 export function LoginPage() {
 
-    const services:Container= useContainer();
+    const services:Container = useContainer();
+    const {setUser} = useLogin();
     const userService:UserService = services.get(UserService)
     const [username, setUsername] = useState("");
     const [password,setPassword] = useState("");
@@ -17,6 +19,8 @@ export function LoginPage() {
         try
         {
             await userService.login(username,password);
+            let loginuser = await userService.getUserFromCookie();
+            setUser(loginuser);
             alert("Sikeres bejelentkezés!");
         }
         catch(e)
