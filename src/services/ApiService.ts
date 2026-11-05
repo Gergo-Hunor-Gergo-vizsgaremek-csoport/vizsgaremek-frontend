@@ -7,7 +7,9 @@ export class ApiService {
   async get<T>(endpoint: string): Promise<T> {
     console.log("GET", `${this.baseUrl}${endpoint}`);
     let url = `${this.baseUrl}${endpoint}`;
-    const response = await fetch(url);
+    const response = await fetch(url,{
+      credentials: "include",
+    });
 
     if (!response.ok) {
       throw new Error(`Request failed: ${response.status}`);

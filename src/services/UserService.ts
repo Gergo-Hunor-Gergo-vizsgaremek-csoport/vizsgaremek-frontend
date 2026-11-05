@@ -30,7 +30,16 @@ export class UserService {
             username: string,
             password:string,
         ): Promise<void> {
-            return this.api.post<void>(`/auth/login?useCookies=true`,{email:username,password:password}); //bugos a backend keretrendszer, ezért az email a felhasználónév
+            await this.api.post<void>(`/auth/login?useCookies=true`,{email:username,password:password}); //bugos a backend keretrendszer, ezért az email a felhasználónév
+        }
+
+        async logout(): Promise<void> {
+            await this.api.post<void>(`/auth/logout`,{});
+        }
+
+        async getUserFromCookie(): Promise<UserReadDto>
+        {
+            return await this.api.get<UserReadDto>(`/User/me`);
         }
 
         async delete(

@@ -1,7 +1,5 @@
 .root
 {
-  margin-right: auto;
-  margin-left: auto;
   gap: 1vw;
 
   .loginDiv
@@ -31,5 +29,10 @@
     height: max(3vw);
     width: max(20vw,200px);
     align-self: center;
+  }
+
+  .errorP
+  {
+    color: red;
   }
 }
