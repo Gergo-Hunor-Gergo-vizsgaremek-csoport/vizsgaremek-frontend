@@ -7,19 +7,21 @@ import {TypeService} from "../services/TypeService.ts";
 import {RendelesService} from "../services/RendelesService.ts";
 import styles from "./TypePage.module.scss";
 import {NavBar} from "../components/NavBar.tsx";
+import {useLogin} from "../services/LoginContext.tsx";
 
 export function TypePage()
 {
     const {typeId} = useParams();
 
     const [item,setItem] = useState<TypeReadDto>();
-    const [quantity,setQuantity] = useState(0);
+    const [quantity,setQuantity] = useState(1);
     const navigate = useNavigate();
 
 
     const services: Container = useContainer();
     const typeService: TypeService = services.get(TypeService);
     const rendelesService: RendelesService = services.get(RendelesService);
+    const {user} = useLogin();
 
     useEffect(() => {
         Load();
@@ -54,7 +56,7 @@ export function TypePage()
                     <p>{item.description}</p>
                     <div className={styles.buttonDiv}>
                         <p></p>
-                        <input type={"number"} defaultValue={0} step={1} className={styles.quantityInput} onChange={(e) => setQuantity(e.target.valueAsNumber)}/>
+                        <input type={"number"} step={1} min={1} value={quantity} className={styles.quantityInput} onChange={(e) => setQuantity(e.target.valueAsNumber)}/>
                         <button className={styles.deleteButton} onClick={async () => {
                             await typeService.delete(item.id)
                             console.log(`kitörölve: ${item.id}`);
@@ -62,22 +64,19 @@ export function TypePage()
                         }}>Törlés</button>
 
                         <button className={styles.orderButton} onClick={async () => {
+                            if (!user || !user.id){
+                                navigate("/login");
+                                return;
+                            }
                             await rendelesService.post(
                                 {
                                     typeId : item.id,
-                                    userId : "d2587282-1005-4015-af61-ee59fb4547b3",
+                                    userId : user.id,
                                     date : new Date(),
                                     quantity : quantity,
                                     completedQuantity : 0
                                 }
                             )
-
-                            console.log({                                typeId : item.id,
-                                userId : "e69f3176-7ad1-4811-9bd6-5f1791b82012",
-                                date : new Date(),
-                                quantity : quantity,
-                                completedQuantity : 0})
-
                             navigate("/");
                         }}>Rendelés</button>
 
