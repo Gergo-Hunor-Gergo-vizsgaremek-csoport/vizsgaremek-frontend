@@ -66,4 +66,17 @@ export class UserService {
             return this.api.get<PeldanyReadDto[]>(`/User/${id}/felelossegek`);
         }
 
+
+    async getMyKolcsonzesek(): Promise<KolcsonzesReadDto[]> {
+        return this.api.get<KolcsonzesReadDto[]>(`/User/me/kolcsonzesek`);
+    }
+
+    async getMyRendelesek(): Promise<RendelesReadDto[]> {
+        return this.api.get<RendelesReadDto[]>(`/User/me/rendelesek`);
+    }
+
+    async getMyFelelossegek(): Promise<PeldanyReadDto[]> {
+        return this.api.get<PeldanyReadDto[]>(`/User/me/felelossegek`);
+    }
+
 }
