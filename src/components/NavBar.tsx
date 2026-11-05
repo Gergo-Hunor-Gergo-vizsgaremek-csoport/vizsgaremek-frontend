@@ -57,7 +57,6 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
 
             <a className={styles.navbarItem} href={"/"}>Típusok keresése</a>
             <a className={styles.navbarItem} href={"/useradmin"}>Felhasználók</a>
-            <a className={styles.navbarItem} href={"/kolcsonzes"}>Kölcsönzések</a>
             <a className={styles.navbarItem} href={"/log"}>Logok</a>
 
             {
@@ -67,6 +66,7 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
                         <div style={{display:`${(open)?"block":"none"}`, position:"absolute", left:0}}>
                             <ul style={{listStyleType:"none", margin:"0",padding:"0", width:"max-content", display:"grid", gridAutoFlow:"row"}} >
                                 <li className={styles.navbarDropdownItem}><a href={"/user/:AKTUALISUSERID"}>Aktuális felhasználó</a></li>
+                                <li className={styles.navbarDropdownItem}><a href={"/me/rendelesek"}>Rendeléseim</a></li>
                                 <li className={styles.navbarDropdownItem}><a onClick={Logout}>Kijelentkezés</a></li>
                             </ul>
                         </div>
