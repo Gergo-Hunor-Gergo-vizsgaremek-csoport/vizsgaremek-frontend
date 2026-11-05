@@ -11,6 +11,7 @@ import {PeldanyPage} from "./pages/PeldanyPage.tsx";
 import {UserPage} from "./pages/UserPage.tsx";
 import {RendelesPage} from "./pages/RendelesPage.tsx";
 import {LoginPage} from "./pages/LoginPage.tsx";
+import {MyRendelesekPage} from "./pages/MyRendelesekPage.tsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dev" element={<DevPage/>}/>
           <Route path="/useradmin" element={<UserAdminPage/>}/>
           <Route path="/user/:userId" element={<UserPage/>}/>
+          <Route path="/me/rendelesek" element={<MyRendelesekPage/>}/>
           <Route path="/rendeles/:rendelesId" element={<RendelesPage/>}/>
           <Route path="/log" element={<LogPage/>}/>
           <Route path="/login" element={<LoginPage/>}/>

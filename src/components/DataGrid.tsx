@@ -4,7 +4,7 @@ import  {type JSX} from "react";
 type DataGridProps<T extends object> = {
     caption: string,
     data: T[],
-    clickEvent: (id: string) => void,
+    clickEvent?: (id: string) => void,
 
     showColums?: boolean[],
 }
@@ -43,9 +43,15 @@ export function DataGrid<T extends object>({ data, caption, clickEvent,showColum
 
             {(data && data.length > 0)?
                 data.map(x=>
-                    <tr onClick={() => clickEvent(Object.values(x)[0]) }>{Object.values(x).map((v,index) =>
+                    <tr onClick={() => {
+                        if (clickEvent) {
+                            clickEvent(Object.values(x)[0])
+                        }}}>
+
+                        {Object.values(x).map((v,index) =>
                         <td hidden={!(showColums[index])}>{String(v)}</td>
-                    )}</tr>
+                        )}
+                    </tr>
                 )
                 : <tr></tr> }
             </tbody>
