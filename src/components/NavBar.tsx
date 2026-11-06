@@ -67,6 +67,7 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
                             <ul style={{listStyleType:"none", margin:"0",padding:"0", width:"max-content", display:"grid", gridAutoFlow:"row"}} >
                                 <li className={styles.navbarDropdownItem}><a href={"/user/:AKTUALISUSERID"}>Aktuális felhasználó</a></li>
                                 <li className={styles.navbarDropdownItem}><a href={"/me/rendelesek"}>Rendeléseim</a></li>
+                                <li className={styles.navbarDropdownItem}><a href={"/me/kolcsonzesek"}>Kölcsönzéseim</a></li>
                                 <li className={styles.navbarDropdownItem}><a onClick={Logout}>Kijelentkezés</a></li>
                             </ul>
                         </div>
