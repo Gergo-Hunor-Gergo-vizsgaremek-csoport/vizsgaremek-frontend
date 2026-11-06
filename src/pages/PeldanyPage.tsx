@@ -44,8 +44,8 @@ export function PeldanyPage()
         <>
             <NavBar onSearchQueryChange={()=>{}} />
             {
-                (data)?
-                    <DataGrid caption={"Típusok"} data={data} clickEvent={ClickedOnSingle} showColums={[false,true,true]}/>
+                (data && data !== null)?
+                    <DataGrid caption={"Single példány"} data={data} clickEvent={ClickedOnSingle} showColums={[true,true,true, true, false, false, false, false, false, false, false, false, false, false]}/>
                     :
                     <p>Betöltés...</p>
             }
