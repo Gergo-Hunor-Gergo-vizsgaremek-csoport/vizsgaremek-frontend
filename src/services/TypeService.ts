@@ -2,6 +2,7 @@ import {inject, injectable} from "inversify";
 import { ApiService } from "./ApiService";
 import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
+import type {PagedDto} from "../dtos/PagedDto.ts";
 
 @injectable()
 export class TypeService {
@@ -13,9 +14,9 @@ export class TypeService {
         q?: string,
         limit?: number,
         offset?: number
-    ): Promise<TypeReadDto[]> {
+    ): Promise<PagedDto<TypeReadDto>> {
 
-        return this.api.get<TypeReadDto[]>(`/Type?q=${q}&limit=${limit}&offset=${offset}`);
+        return this.api.get<PagedDto<TypeReadDto>>(`/Type?q=${q}&limit=${limit}&offset=${offset}`);
     }
 
     async get(
