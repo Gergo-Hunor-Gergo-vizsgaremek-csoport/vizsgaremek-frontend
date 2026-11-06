@@ -10,19 +10,11 @@ export class PeldanyService {
         @inject(ApiService)
         private readonly api: ApiService)
     {}
-    async search(
-        q?: string,
-        limit?: number,
-        offset?: number
-    ): Promise<PeldanyReadDto[]> {
-
-        return this.api.get<PeldanyReadDto[]>(`/Peldany?q=${q}&limit=${limit}&offset=${offset}`);
-    }
 
     async get(
         typeId:string
     ): Promise<PeldanyReadDto[]> {
-        return this.api.get<PeldanyReadDto[]>(`/Peldany/by-type/${typeId}`);
+        return this.api.get<PeldanyReadDto[]>(`/Peldany/${typeId}`);
     }
 
     /*async update(
