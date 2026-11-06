@@ -12,9 +12,15 @@ export class PeldanyService {
     {}
 
     async get(
+        id:string
+    ): Promise<PeldanyReadDto> {
+        return this.api.get<PeldanyReadDto>(`/Peldany/${id}`);
+    }
+
+    async getByTypeId(
         typeId:string
     ): Promise<PeldanyReadDto[]> {
-        return this.api.get<PeldanyReadDto[]>(`/Peldany/${typeId}`);
+        return this.api.get<PeldanyReadDto[]>(`/Peldany/by-typeId/${typeId}`);
     }
 
     /*async update(

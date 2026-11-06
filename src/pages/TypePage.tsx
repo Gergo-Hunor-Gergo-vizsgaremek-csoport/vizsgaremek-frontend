@@ -83,7 +83,7 @@ export function TypePage()
 
                         <button className={styles.peldanyButton}
                                 onClick={() => {
-                                    navigate(`/peldany/${item.id}`);
+                                    navigate(`/peldany/by-typeId/${item.id}`);
                         }}>Példányok</button>
 
                     </div>

@@ -11,8 +11,8 @@ import {DataGrid} from "../components/DataGrid.tsx";
 export function PeldanyPage()
 {
     const services: Container = useContainer();
-    const peldanyService: PeldanyService = services.get(PeldanyService);
     const {peldanyTypeId} = useParams();
+    const peldanyService: PeldanyService = services.getByTypeId(peldanyTypeId);
     const [data, setData] = useState<PeldanyReadDto[] | null>();
     const navigate = useNavigate();
 
