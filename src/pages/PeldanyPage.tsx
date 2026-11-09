@@ -37,7 +37,7 @@ export function PeldanyPage()
     function ClickedOnSingle(id:string)
     {
         console.log(id);
-        navigate(`/`);
+        navigate(`/single/${id}`);
     }
 
     return (
