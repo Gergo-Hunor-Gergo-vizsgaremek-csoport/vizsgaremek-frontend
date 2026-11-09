@@ -37,9 +37,9 @@ export function DataGrid<T extends object>({ data, caption, clickEvent,showColum
 
     return (
         <div className={styles.root}>
+            <h2>{caption}</h2>
         <div className={styles.wrapper}>
         <table>
-            <caption><h2>{caption}</h2></caption>
             <thead>
             <tr>
                 {

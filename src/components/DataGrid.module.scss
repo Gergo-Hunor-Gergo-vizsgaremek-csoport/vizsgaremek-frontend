@@ -1,14 +1,14 @@
 .root
 {
-
+  max-width: 80vw;
+  margin: 2vh auto;
+  display: inline-block;
 
 
   .wrapper
   {
     overflow-x: auto;
-    max-width: 80vw;
-    margin: 2vh auto;
-    display: inline-block;
+
   }
 
   table {
@@ -23,6 +23,11 @@
     background: black;
     font-weight: bold;
     padding: 0 1rem;
+  }
+
+  h2{
+    background-color: black;
+    margin: 0;
   }
 
   td, th
