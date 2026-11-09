@@ -1,10 +1,11 @@
+@use "../themes/index";
 $fontsize: 16px;
 
 @mixin navbarItemMixin
 {
   text-align: center;
   align-content: center;
-  color: white;
+  color: index.$text;
   display: block;
   padding: 0.5vh 1vw;
   box-sizing: border-box;
@@ -18,14 +19,14 @@ $fontsize: 16px;
 }
 
 .root{
-  background-color: #404040;;
+  background-color: index.$elevated;
   font-size: $fontsize;
   display: flex;
   justify-content: center;
   //overflow-x: auto;
   a{
     text-decoration: none;
-    color: white;
+    color: index.$text;
   }
 
   input[type="text"]
@@ -44,12 +45,13 @@ $fontsize: 16px;
     text-align: center;
     height: 4vh;
     min-height: 30px;
+    background: index.$surface;
   }
 
   .searchicon
   {
     align-content: center;
-    background-color: #606060;
+    background-color: index.$surface;
     width: 4vh;
     height: 4vh;
     margin-left: 4px;
@@ -60,13 +62,13 @@ $fontsize: 16px;
   .navbarItem
   {
     @include navbarItemMixin;
-    background-color: #404040;
+    background-color: index.$elevated;
   }
 
   .navbarDropdownItem
   {
     @include navbarItemMixin;
-    background-color: #606060;
+    background-color: index.$elevated-2;
     padding: 0;
     width: 100%;
 
@@ -74,10 +76,6 @@ $fontsize: 16px;
       width: 100%;
       height: 100%;
       padding: 2vh 1vw;
-    }
-
-    &:nth-child(2n){
-      background-color: #404040;
     }
   }
 
