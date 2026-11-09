@@ -12,7 +12,7 @@ export function PeldanyPage()
 {
     const services: Container = useContainer();
     const {peldanyTypeId} = useParams();
-    const peldanyService: PeldanyService = services.getByTypeId(peldanyTypeId);
+    const peldanyService = services.get(PeldanyService);
     const [data, setData] = useState<PeldanyReadDto[] | null>();
     const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ export function PeldanyPage()
         if (!peldanyTypeId) return;
 
         try {
-            let result = await peldanyService.get(peldanyTypeId);
+            let result = await peldanyService.getByTypeId(peldanyTypeId);
             console.log("API válasz:", result);
             setData(result);
         } catch (error) {
