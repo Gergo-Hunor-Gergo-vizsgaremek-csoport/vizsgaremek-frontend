@@ -1,15 +1,21 @@
 import styles from "./DataGrid.module.scss"
-import  {type JSX} from "react";
+import {type JSX} from "react";
+import {Pager} from "./Pager.tsx";
 
 type DataGridProps<T extends object> = {
     caption: string,
     data: T[],
     clickEvent?: (id: string) => void,
+    pageNumber?: number,
+    setPageNumber?: (pageNumber: number) => void,
+    maxPageNumber?: number
 
     showColums?: boolean[],
 }
 
-export function DataGrid<T extends object>({ data, caption, clickEvent,showColums }: DataGridProps<T>): JSX.Element {
+export function DataGrid<T extends object>({ data, caption, clickEvent,showColums,pageNumber=1,setPageNumber=()=>{},maxPageNumber=1}: DataGridProps<T>): JSX.Element {
+
+
 
     if (data.length === 0) {
         return (<></>);
@@ -27,8 +33,11 @@ export function DataGrid<T extends object>({ data, caption, clickEvent,showColum
         showColums = showColums.concat(newArray);
     }
 
+
+
     return (
         <div className={styles.root}>
+        <div className={styles.wrapper}>
         <table>
             <caption><h2>{caption}</h2></caption>
             <thead>
@@ -51,11 +60,14 @@ export function DataGrid<T extends object>({ data, caption, clickEvent,showColum
                         {Object.values(x).map((v,index) =>
                         <td hidden={!(showColums[index])}>{String(v)}</td>
                         )}
+
                     </tr>
                 )
                 : <tr></tr> }
             </tbody>
         </table>
+        </div>
+            {(maxPageNumber > 1)?<Pager pageNumber={pageNumber} setPageNumber={setPageNumber} maxPageNumber={maxPageNumber}/>:<></>}
         </div>
     );
 }

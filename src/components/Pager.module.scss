@@ -1,0 +1,29 @@
+.root
+{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: min-content;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  box-sizing: border-box;
+
+  .pagerDisplay
+  {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 20px;
+    transform: translate(0,-2px);   // a szám nagyobb helyet foglal el mint az ikonok azonos fontsize esetén ez megoldja
+  }
+
+  .pagerButton
+  {
+    background-color: transparent;
+    border: none;
+  }
+
+  .pagerIcon
+  {
+    font-size: 20px;
+  }
+}

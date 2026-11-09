@@ -5,7 +5,6 @@ import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {TypeService} from "../services/TypeService.ts";
-import {HighlightElements} from "../Highligher.ts";
 import {DataGrid} from "../components/DataGrid.tsx";
 import type {PagedDto} from "../dtos/PagedDto.ts";
 
@@ -15,25 +14,28 @@ export function TypeSearchPage() {
     const navigate = useNavigate();
 
     const [data,setdata] = useState<PagedDto<TypeReadDto> | null>();
+    const [pagenum,setPagenum] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
 
     const [searchquery, setSearchquery] = useState("");
 
+    const LIMIT = 2;
+
     async function Load()
     {
-        let result = await typeService.search(searchquery,1,0);
+        let result = await typeService.search(searchquery,LIMIT,LIMIT*(pagenum-1));
+        setMaxPage(result.pageCount);
         setdata(result);
     }
 
     useEffect(() => {
         Load();
-
-    }, [searchquery]);
+    }, [searchquery,pagenum]);
 
 
 
     function ClickedType(id:string)
     {
-        console.log(id);
         navigate(`/type/${id}`);
     }
 
@@ -42,7 +44,7 @@ export function TypeSearchPage() {
             <NavBar onSearchQueryChange={setSearchquery} />
                 {
                     (data)?
-                        <DataGrid caption={"Típusok"} data={data.items} clickEvent={ClickedType} showColums={[false,true,true]}/>
+                        <DataGrid caption={"Típusok"} data={data.items} clickEvent={ClickedType} pageNumber={pagenum} maxPageNumber={maxPage} setPageNumber={setPagenum} showColums={[false,true,true]}/>
                         :
                         <p>Betöltés...</p>
                 }
