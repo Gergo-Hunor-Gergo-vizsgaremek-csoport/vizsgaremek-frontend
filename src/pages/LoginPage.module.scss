@@ -1,18 +1,17 @@
+@use "../themes/index";
+
 .root
 {
-  gap: 1vw;
-
-  .loginDiv
-  {
     margin: auto;
     width: max(50vw,300px);
     display: flex;
     flex-direction: column;
-  }
 
   h1
   {
     margin-bottom: 2vw;
+    text-align: center;
+    color: index.$text;
   }
 
   .loginButton
@@ -20,6 +19,10 @@
     width: 15vw;
     height: 5vw;
     align-self: center;
+    background-color: index.$surface;
+    color: index.$text;
+    border-radius: 10px;
+    border: 2px solid index.$border;
   }
 
   .loginInput
@@ -29,10 +32,23 @@
     height: max(3vw);
     width: max(20vw,200px);
     align-self: center;
+
+    border-radius: 10px;
+    border: 2px solid index.$border;
+
+    background-color: index.$surface;
+    color: index.$text;
+
+    &::placeholder
+    {
+      color: index.$faint;
+    }
+
   }
 
   .errorP
   {
     color: red;
+    text-align: center;
   }
 }
