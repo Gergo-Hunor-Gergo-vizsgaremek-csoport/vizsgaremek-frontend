@@ -23,6 +23,15 @@ export class PeldanyService {
         return this.api.get<PeldanyReadDto[]>(`/Peldany/by-typeId/${typeId}`);
     }
 
+    /*async search(
+        q?: string,
+        limit?: number,
+        offset?: number
+    ): Promise<PeldanyReadDto[]> {
+
+        return this.api.get<PeldanyReadDto[]>(`/Peldany?q=${q}&limit=${limit}&offset=${offset}`);
+    }*/
+
     /*async update(
         id: string,
         peldany: PeldanyUpdateDto

@@ -1,53 +1,45 @@
-@mixin buttonstyles
+.root
 {
-  min-width: fit-content;
-  min-height: fit-content;
-  padding: 1vw 2vw;
-  margin: 1vw 2vw;
-  display:inline-block;
-  justify-self: center;
-  text-align:center;
-  color: white;
-  transition: 0.2s;
-  width: 30vw;
+  overflow-x: auto;
+  max-width: 80vw;
+  margin: 2vh auto;
+  display: inline-block;
 
-  &:hover{
-    filter: brightness(80%);
-  }
-}
+  table {
+    margin-top: 50px;
+    justify-self: center;
+    align-self: center;
+    color: #FAFAFA;
+    border-collapse: collapse;
+    text-align: center;
 
+    th, caption
+    {
+      background: black;
+      font-weight: bold;
+      padding: 0 1rem;
+    }
 
-.root {
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  height: 100%;
-  min-width: fit-content;
-  background-color: darkgray;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  color: white;
-
-
-  .buttonDiv {
-    margin-top: 1em;
-    margin-left: auto;
-    margin-right: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    td, th
+    {
+      border-left: 2px solid black;
+      border-right: 2px solid black;
+      padding: 1rem;
+    }
+    tr:nth-child(odd)
+    {
+      background: #606060;
+    }
+    tr:nth-child(even)
+    {
+      background: #404040;
+    }
   }
 
-
-  .mainDiv {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-
-  .deleteButton {
-    background-color: red;
-    @include buttonstyles;
+  p{
+    margin-top: 50px;
+    width: 80vw;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 }

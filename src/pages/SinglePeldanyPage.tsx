@@ -5,8 +5,7 @@ import {useEffect, useState} from "react";
 //import {NavBar} from "../components/NavBar.tsx";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
 import {PeldanyService} from "../services/PeldanyService.ts";
-//import {RendelesService} from "../services/RendelesService.ts";
-//import styles from "./TypePage.module.scss";
+import styles from "./SinglePeldanyPage.module.scss";
 
 export function SinglePeldanyPage()
 {
@@ -14,7 +13,6 @@ export function SinglePeldanyPage()
     const {peldanyId} = useParams();
     const [peldany,setPeldany] = useState<PeldanyReadDto>();
     const peldanyService: PeldanyService = services.get(PeldanyService);
-    //const rendelesService: RendelesService = services.get(RendelesService);
 
     useEffect(() => {
         console.log("Alagút az éjszaka, fut a vonat!");
@@ -44,9 +42,36 @@ export function SinglePeldanyPage()
     }
 
     return(
-        <>
-            <p>{peldany.id}</p>
-            <p></p>
-        </>
+        <div className={styles.root}>
+            <div className={styles.mainDiv}>
+                <h1>{peldany.id}</h1>
+                <table>
+                    <caption><h2>Description</h2></caption>
+                    <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th>Type</th>
+                        <td>{peldany.typeId}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Serialnumber</th>
+                        {
+                            (peldany.serialNumber === "string")
+                                ?<td>Ismeretlen</td>
+                                :<td>{peldany.serialNumber}</td>
+                        }
+                    </tr>
+                    </tbody>
+                </table>
+                <p>{peldany.description}</p>
+            </div>
+        </div>
     )
 }

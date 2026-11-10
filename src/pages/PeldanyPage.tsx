@@ -3,7 +3,6 @@ import {Container} from "inversify";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {PeldanyService} from "../services/PeldanyService.ts";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
-//import styles from "./PeldanyPage.module.scss";
 import {useParams, useNavigate} from "react-router";
 import {NavBar} from "../components/NavBar.tsx";
 import {DataGrid} from "../components/DataGrid.tsx";
@@ -14,6 +13,7 @@ export function PeldanyPage()
     const {peldanyTypeId} = useParams();
     const peldanyService = services.get(PeldanyService);
     const [data, setData] = useState<PeldanyReadDto[] | null>();
+    //const [searchquery, setSearchquery] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export function PeldanyPage()
             <NavBar onSearchQueryChange={()=>{}} />
             {
                 (data && data !== null)?
-                    <DataGrid caption={"Single példány"} data={data} clickEvent={ClickedOnSingle} showColums={[true,true,true, true, false, false, false, false, false, false, false, false, false, false]}/>
+                    <DataGrid caption={"Single példány"} data={data} clickEvent={ClickedOnSingle} showColums={[true,false,true, true, false, false, false, false, false, false, false, false, false, false]}/>
                     :
                     <p>Betöltés...</p>
             }
