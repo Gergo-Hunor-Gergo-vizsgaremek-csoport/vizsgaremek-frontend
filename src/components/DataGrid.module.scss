@@ -1,3 +1,5 @@
+@use "../themes/index";
+
 .root
 {
  margin-left: auto;
@@ -12,36 +14,54 @@
     max-width: 80vw;
     margin: 2vh auto;
     display: inline-block;
+    //border: 2px solid index.$border-strong;
+    //border-collapse: collapse;
   }
 
   table {
     justify-self: center;
     align-self: center;
-    color: #FAFAFA;
+    color: index.$text;
     border-collapse: collapse;
     text-align: center;
   }
+
+
   th, caption
   {
-    background: black;
+    background: index.$elevated;
     font-weight: bold;
     padding: 0 1rem;
   }
 
   td, th
   {
-    border-left: 2px solid black;
-    border-right: 2px solid black;
+   border-left: 2px solid index.$border;
+   border-right: 2px solid index.$border-strong;
     padding: 1rem;
+    &:last-child
+    {
+      border-right: none;
+    }
   }
-  tr:nth-child(odd)
-  {
-    background: #606060;
+
+  tr{
+    &:nth-child(odd)
+    {
+      background: index.$surface;
+    }
+
+    &:nth-child(even)
+    {
+      background: index.$row-alt;
+    }
+
+    &:hover{
+      background-color: index.$accent-hover;
+    }
   }
-  tr:nth-child(even)
-  {
-    background: #404040;
-  }
+
+
 
 }
 
