@@ -43,8 +43,9 @@ export function SinglePeldanyPage()
 
     return(
         <div className={styles.root}>
+            <h1>{peldany.id}</h1>
             <div className={styles.mainDiv}>
-                <h1>{peldany.id}</h1>
+                <img alt="image" src={"https://placehold.co/150"}/>
                 <table>
                     <caption><h2>Description</h2></caption>
                     <thead>
@@ -70,7 +71,9 @@ export function SinglePeldanyPage()
                     </tr>
                     </tbody>
                 </table>
-                <p>{peldany.description}</p>
+                <div className={styles.descText}>
+                    <p>{peldany.description}</p>
+                </div>
             </div>
         </div>
     )
