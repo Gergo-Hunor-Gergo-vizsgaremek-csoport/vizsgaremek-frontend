@@ -15,12 +15,6 @@ type DataGridProps<T extends object> = {
 
 export function DataGrid<T extends object>({ data, caption, clickEvent,showColums,pageNumber=1,setPageNumber=()=>{},maxPageNumber=1}: DataGridProps<T>): JSX.Element {
 
-
-
-    if (pageNumber > maxPageNumber) {
-        setPageNumber(maxPageNumber);
-    }
-
     if (data.length === 0) {
         return (<></>);
     }
