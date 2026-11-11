@@ -31,15 +31,15 @@ export function LoginPage() {
     }
 
     return (
+    <>
+        <NavBar/>
         <div className={styles.root}>
-            <NavBar/>
-            <div className={styles.loginDiv}>
                 <h1>Bejelentkezés</h1>
                 <input className={styles.loginInput} name={"username"} value={username} onChange={(e) =>setUsername(e.currentTarget.value)} type="text" placeholder="Felhasználónév"/>
                 <input className={styles.loginInput} name={"password"} value={password} onChange={(e) => setPassword(e.currentTarget.value)} type="password" placeholder="Jelszó" />
                 <button onClick={SendLogin} className={styles.loginButton}>Bejelentkezés</button>
                 {(error)?<p className={styles.errorP}>Helytelen felhasználónév vagy jelszó!</p>:<></>}
-            </div>
         </div>
+    </>
     )
 }

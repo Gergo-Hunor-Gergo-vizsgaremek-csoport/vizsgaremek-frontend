@@ -1,10 +1,12 @@
+@use "../themes/index";
 $fontsize: 16px;
 
 @mixin navbarItemMixin
 {
   text-align: center;
   align-content: center;
-  color: white;
+  color: index.$text;
+  text-decoration: none;
   display: block;
   padding: 0.5vh 1vw;
   box-sizing: border-box;
@@ -13,29 +15,24 @@ $fontsize: 16px;
   text-wrap: nowrap;
 
   &:hover {
-    filter: brightness(120%)  ;
+    background-color: index.$accent-subtle  ;
   }
 }
 
 .root{
-  background-color: #404040;;
+  background-color: index.$elevated;
   font-size: $fontsize;
   display: flex;
   justify-content: center;
-  //overflow-x: auto;
-  a{
-    text-decoration: none;
-    color: white;
+
+
+  .scroll{
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
   }
 
-  input[type="text"]
-  {
-    font-size: $fontsize;
-    border: none;
-    padding-left: 10px;
-  }
-
-  .navsearch
+  .navsearch  //div az inputtal és az ikonnal benne
   {
     box-sizing: border-box;
     display: flex;
@@ -44,12 +41,32 @@ $fontsize: 16px;
     text-align: center;
     height: 4vh;
     min-height: 30px;
+    background: index.$surface;
+  }
+
+  .searchInput //input mező
+  {
+    font-size: $fontsize;
+    border: none;
+    padding-left: 10px;
+    background-color: index.$surface;
+    color: index.$text;
+    margin-left: 2px;
+
+    &:focus-visible {
+      outline: 2px solid index.$accent;
+    }
+
+    &::placeholder {
+      color: index.$faint;
+    }
   }
 
   .searchicon
   {
     align-content: center;
-    background-color: #606060;
+    background-color: index.$surface;
+    color: index.$faint;
     width: 4vh;
     height: 4vh;
     margin-left: 4px;
@@ -60,24 +77,28 @@ $fontsize: 16px;
   .navbarItem
   {
     @include navbarItemMixin;
-    background-color: #404040;
+    background-color: index.$elevated;
+  }
+
+  .dropdownMenu
+  {
+    background-color: index.$elevated-2;
   }
 
   .navbarDropdownItem
   {
     @include navbarItemMixin;
-    background-color: #606060;
+    background-color: index.$elevated-2;
     padding: 0;
     width: 100%;
+    text-align: center;
+    box-sizing: border-box;
 
     a{
-      width: 100%;
-      height: 100%;
-      padding: 2vh 1vw;
-    }
-
-    &:nth-child(2n){
-      background-color: #404040;
+      display: block;
+      text-decoration: none;
+      color: index.$text;
+      padding: 1vh 2vw;
     }
   }
 

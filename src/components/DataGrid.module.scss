@@ -1,49 +1,83 @@
+@use "../themes/index";
+
 .root
 {
-  max-width: 80vw;
   margin: 2vh auto;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  max-width: 80vw;
+  width: fit-content;
 
 
   .wrapper
   {
     overflow-x: auto;
-
+    display: flex;
+    margin: auto;
   }
 
   table {
     justify-self: center;
     align-self: center;
-    color: #FAFAFA;
+    color: index.$text;
     border-collapse: collapse;
     text-align: center;
   }
-  th, caption
+
+  h1{
+    margin-bottom: 0;
+    padding: 1vh 1vw;
+    background-color: index.$elevated;
+    text-align: center;
+  }
+
+  th
   {
-    background: black;
+    background: index.$elevated;
     font-weight: bold;
     padding: 0 1rem;
   }
 
-  h2{
-    background-color: black;
-    margin: 0;
-  }
 
   td, th
   {
-    border-left: 2px solid black;
-    border-right: 2px solid black;
+   border-left: 2px solid index.$border;
+   border-right: 2px solid index.$border-strong;
     padding: 1rem;
+    &:last-child
+    {
+      border-right: none;
+    }
   }
-  tr:nth-child(odd)
+
+  tr{
+    &:nth-child(odd)
+    {
+      background: index.$surface;
+    }
+
+    &:nth-child(even)
+    {
+      background: index.$row-alt;
+    }
+
+    &:hover{
+      background-color: index.$accent-hover;
+      color: index.$on-accent;
+    }
+
+  }
+
+  thead
   {
-    background: #606060;
+    tr th
+    {
+      background-color: index.$elevated;
+      color: index.$text;
+    }
   }
-  tr:nth-child(even)
-  {
-    background: #404040;
-  }
+
+
 
 }
 
