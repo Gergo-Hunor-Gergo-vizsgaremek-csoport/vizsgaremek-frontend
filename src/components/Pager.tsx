@@ -41,7 +41,7 @@ export function Pager({pageNumber,setPageNumber, maxPageNumber}:PagerProps)
 
     useEffect(() => {
         PageNumChange(pageNumber);
-    },[pageNumber]);
+    },[pageNumber,maxPageNumber]);
 
     return(
         <div className={styles.root}>
