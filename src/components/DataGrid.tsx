@@ -17,6 +17,10 @@ export function DataGrid<T extends object>({ data, caption, clickEvent,showColum
 
 
 
+    if (pageNumber > maxPageNumber) {
+        setPageNumber(maxPageNumber);
+    }
+
     if (data.length === 0) {
         return (<></>);
     }
@@ -37,7 +41,7 @@ export function DataGrid<T extends object>({ data, caption, clickEvent,showColum
 
     return (
         <div className={styles.root}>
-            <h2>{caption}</h2>
+            <h1>{caption}</h1>
         <div className={styles.wrapper}>
         <table>
             <thead>
