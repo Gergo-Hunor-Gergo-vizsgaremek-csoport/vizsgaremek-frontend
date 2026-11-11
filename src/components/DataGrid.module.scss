@@ -61,7 +61,11 @@
       color: index.$on-accent;
     }
 
-    &:nth-child(1)  //headeres soron ne legyen hover
+  }
+
+  thead
+  {
+    tr th
     {
       background-color: index.$elevated;
       color: index.$text;
