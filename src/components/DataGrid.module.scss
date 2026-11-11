@@ -2,20 +2,18 @@
 
 .root
 {
- margin-left: auto;
-  margin-right: auto;
+  margin: 2vh auto;
   display: flex;
   flex-direction: column;
+  max-width: 80vw;
+  width: fit-content;
 
 
   .wrapper
   {
     overflow-x: auto;
-    max-width: 80vw;
-    margin: 2vh auto;
-    display: inline-block;
-    //border: 2px solid index.$border-strong;
-    //border-collapse: collapse;
+    display: flex;
+    margin: auto;
   }
 
   table {
@@ -26,18 +24,20 @@
     text-align: center;
   }
 
+  h1{
+    margin-bottom: 0;
+    padding: 1vh 1vw;
+    background-color: index.$elevated;
+    text-align: center;
+  }
 
-  th, caption
+  th
   {
     background: index.$elevated;
     font-weight: bold;
     padding: 0 1rem;
   }
 
-  h2{
-    background-color: black;
-    margin: 0;
-  }
 
   td, th
   {
