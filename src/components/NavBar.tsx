@@ -13,7 +13,7 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
     const userservice = services.get(UserService);
     const menuRef = useRef<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
-    const {user} = useLogin();
+    const {isLoggedIn} = useLogin();
 
     useEffect(() => {
         if (!open) return;
@@ -61,7 +61,7 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
             </div>
 
             {
-                (user)?
+                (isLoggedIn)?
                     <div ref={menuRef} className={styles.navbarItem} onClick={() =>{(open)?setOpen(false):setOpen(true);}} style={{position:"relative"}}><i className={`material-icons ${styles.personIcon}`}>person_outline</i>
 
                         <div className={styles.dropdownMenu} style={{display:`${(open)?"block":"none"}`, position:"absolute", left:0}}>
