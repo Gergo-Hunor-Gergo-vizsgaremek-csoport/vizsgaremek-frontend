@@ -76,7 +76,7 @@ export default defineConfig({
 
   webServer: [
     {
-      command: 'node e2e/support/start-postgres.mjs',
+      command: 'node e2e/infrastructure/start-postgres.mjs',
       url: 'http://localhost:54330',
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,                      // first run pulls the image
