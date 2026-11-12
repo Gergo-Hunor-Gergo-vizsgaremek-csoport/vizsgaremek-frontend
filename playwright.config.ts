@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const backendDir = process.env.BACKEND_DIR ?? '../your-backend-repo';
+const backendDir = process.env.BACKEND_DIR ?? './backend';
 const BACKEND_PORT = 5193;
 
 /**
