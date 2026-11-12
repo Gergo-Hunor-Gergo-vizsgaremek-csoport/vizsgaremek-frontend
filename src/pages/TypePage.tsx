@@ -47,22 +47,18 @@ export function TypePage()
         return (<></>)
     }
     return (
-        <div className={styles.root}>
+        <>
             <NavBar onSearchQueryChange={()=>{}}/>
-            <div>
-                <div className={styles.mainDiv}>
-                    <h1>{item.name}</h1>
-                    <img alt="image" src={item.icon ?? "https://placehold.co/150"}/>
-                    <p>{item.description}</p>
-                    <div className={styles.buttonDiv}>
-                        <p></p>
-                        <input type={"number"} step={1} min={1} value={quantity} className={styles.quantityInput} onChange={(e) => setQuantity(e.target.valueAsNumber)}/>
-                        <button className={styles.deleteButton} onClick={async () => {
-                            await typeService.delete(item.id)
-                            console.log(`kitörölve: ${item.id}`);
-                            navigate("/");
-                        }}>Törlés</button>
+                <div className={styles.root}>
 
+                    <div className={styles.dataDiv}>
+                        <h1>{item.name}</h1>
+                        <img style={{minWidth:"400px",minHeight:"400px"}} src={item.icon ?? "https://placehold.co/150"}/>
+                        <p>{item.description}</p>
+                    </div>
+
+                    <div className={styles.rendelesDiv}>
+                        <input type={"number"} step={1} min={1} value={quantity} className={styles.quantityInput} onChange={(e) => setQuantity(e.target.valueAsNumber)}/>
                         <button className={styles.orderButton} onClick={async () => {
                             if (!user || !user.id){
                                 navigate("/login");
@@ -79,6 +75,14 @@ export function TypePage()
                             )
                             navigate("/");
                         }}>Rendelés</button>
+                    </div>
+
+                    <div className={styles.buttonDiv}>
+                        <button className={styles.deleteButton} onClick={async () => {
+                            await typeService.delete(item.id)
+                            console.log(`kitörölve: ${item.id}`);
+                            navigate("/");
+                        }}>Törlés</button>
 
                         <button className={styles.peldanyButton}
                                 onClick={() => {
@@ -87,7 +91,6 @@ export function TypePage()
 
                     </div>
                 </div>
-            </div>
-        </div>
+        </>
     )
 }
