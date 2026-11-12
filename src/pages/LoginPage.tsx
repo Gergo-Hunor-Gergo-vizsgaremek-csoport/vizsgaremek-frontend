@@ -9,7 +9,7 @@ import {useLogin} from "../services/LoginContext.tsx";
 export function LoginPage() {
 
     const services:Container = useContainer();
-    const {setUser} = useLogin();
+    const {setUser,setIsLoggedIn} = useLogin();
     const userService:UserService = services.get(UserService)
     const [username, setUsername] = useState("");
     const [password,setPassword] = useState("");
@@ -22,6 +22,7 @@ export function LoginPage() {
             await userService.login(username,password);
             let loginuser = await userService.getUserFromCookie();
             setUser(loginuser);
+            setIsLoggedIn(true);
             setError(false);
         }
         catch(e)

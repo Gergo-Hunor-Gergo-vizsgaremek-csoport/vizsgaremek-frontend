@@ -2,30 +2,31 @@ import {useEffect, useState} from "react";
 import {Container} from "inversify";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {PeldanyService} from "../services/PeldanyService.ts";
-//import styles from "./PeldanyPage.module.scss";
-//import {DataGrid} from "../components/DataGrid.tsx";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
-import styles from "./PeldanyPage.module.scss";
-import {useParams} from "react-router";
+import {useParams, useNavigate} from "react-router";
+import {NavBar} from "../components/NavBar.tsx";
+import {DataGrid} from "../components/DataGrid.tsx";
 
 export function PeldanyPage()
 {
     const services: Container = useContainer();
-    const peldanyService: PeldanyService = services.get(PeldanyService);
     const {peldanyTypeId} = useParams();
-    const [data, setData] = useState<PeldanyReadDto[] | null>([]);
+    const peldanyService = services.get(PeldanyService);
+    const [data, setData] = useState<PeldanyReadDto[] | null>();
+    //const [searchquery, setSearchquery] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         console.log("Fut a cuccos!");
         load();
-    }, [peldanyTypeId])
+    }, [])
 
     async function load() {
         console.log("Kapott paraméter az URL-ből:", peldanyTypeId);
         if (!peldanyTypeId) return;
 
         try {
-            let result = await peldanyService.get(peldanyTypeId);
+            let result = await peldanyService.getByTypeId(peldanyTypeId);
             console.log("API válasz:", result);
             setData(result);
         } catch (error) {
@@ -33,26 +34,21 @@ export function PeldanyPage()
         }
     }
 
+    function ClickedOnSingle(id:string)
+    {
+        console.log(id);
+        navigate(`/single/${id}`);
+    }
+
     return (
         <>
-            <div className={styles.root}>
-                <table className={styles.maintable}>
-                    <thead>
-                    <tr>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {(data && data.length > 0)?
-                        data.map(item =>
-                            <tr key={item.typeId.toString()}>
-                                <td>{item.typeId.toString()}</td>
-                                <td>{item.description.toString()}</td>
-                                <td>{item.addDate.toString()}</td>
-                            </tr>):
-                        <tr> </tr>}
-                    </tbody>
-                </table>
-            </div>
+            <NavBar onSearchQueryChange={()=>{}} />
+            {
+                (data && data !== null)?
+                    <DataGrid caption={"Single példány"} data={data} clickEvent={ClickedOnSingle} showColums={[true,false,true, true, false, false, false, false, false, false, false, false, false, false]}/>
+                    :
+                    <p>Betöltés...</p>
+            }
         </>
     )
 }

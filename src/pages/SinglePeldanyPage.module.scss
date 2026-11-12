@@ -1,0 +1,63 @@
+.root
+{
+  overflow-x: auto;
+  max-width: 80vw;
+  margin: 2vh auto;
+  display: inline-block;
+
+  .mainDiv
+  {
+    position: absolute;
+    display: flex;
+    gap: 20px;
+
+    table {
+      flex: 1;
+      margin-top: 50px;
+      justify-self: center;
+      align-self: center;
+      color: #FAFAFA;
+      border-collapse: collapse;
+      text-align: center;
+
+      th, caption
+      {
+        background: black;
+        font-weight: bold;
+        padding: 0 1rem;
+      }
+
+      td, th
+      {
+        border-left: 2px solid black;
+        border-right: 2px solid black;
+        padding: 1rem;
+      }
+      tr:nth-child(odd)
+      {
+        background: #606060;
+      }
+      tr:nth-child(even)
+      {
+        background: #404040;
+      }
+    }
+
+    img
+    {
+      flex: 1;
+    }
+
+    .descText
+    {
+      position: absolute;
+      margin-top: 40vh;
+      margin-right: 40vw;
+      p{
+        width: 60vw;
+        white-space: normal;
+        overflow-wrap: break-word;
+      }
+    }
+  }
+}
