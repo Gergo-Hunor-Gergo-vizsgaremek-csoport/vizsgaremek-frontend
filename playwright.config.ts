@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const backendDir = process.env.BACKEND_DIR ?? '../your-backend-repo';
+const BACKEND_PORT = 5193;
 
 /**
  * Read environment variables from file.
@@ -84,11 +85,11 @@ export default defineConfig({
     {
       command: 'dotnet run --no-launch-profile',
       cwd: backendDir,
-      url: 'http://localhost:5000/health',
+      url: `http://localhost:${BACKEND_PORT}/health`,
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
       env: {
-        ASPNETCORE_URLS: 'http://localhost:5193',
+        ASPNETCORE_URLS: `http://localhost:${BACKEND_PORT}`,
         ASPNETCORE_ENVIRONMENT: 'Test',
         VizsgaremekConnectionString:
             'Host=localhost;Port=54329;Database=vizsgaremek_test;Username=postgres;Password=postgres',
