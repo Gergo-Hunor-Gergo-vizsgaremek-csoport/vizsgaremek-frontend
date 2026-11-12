@@ -16,9 +16,9 @@ jobs:
     - name: Checkout backend
       uses: actions/checkout@v4
       with:
-      repository: Gergo-Hunor-Gergo-vizsgaremek-csoport/vizsgaremek-backend
-      ref: master
-      path: backend
+        repository: Gergo-Hunor-Gergo-vizsgaremek-csoport/vizsgaremek-backend
+        ref: master
+        path: backend
 
     - uses: actions/setup-dotnet@v4
       with:
