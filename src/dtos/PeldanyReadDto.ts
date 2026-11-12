@@ -4,6 +4,7 @@ export interface PeldanyReadDto {
     description: string;
     addDate: Date;
     manufacturingDate?: Date;
+    serialNumber?: string;
     isHibas: boolean;
     isSelejt: boolean;
     isSelejtSugg: boolean;
