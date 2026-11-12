@@ -3,8 +3,10 @@ import {useContainer} from "../services/ServiceContext.tsx";
 import {useParams} from "react-router";
 import {useEffect, useState} from "react";
 //import {NavBar} from "../components/NavBar.tsx";
+import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
 import {PeldanyService} from "../services/PeldanyService.ts";
+import {TypeService} from "../services/TypeService.ts";
 import styles from "./SinglePeldanyPage.module.scss";
 
 export function SinglePeldanyPage()
@@ -12,7 +14,9 @@ export function SinglePeldanyPage()
     const services: Container = useContainer();
     const {peldanyId} = useParams();
     const [peldany,setPeldany] = useState<PeldanyReadDto>();
+    const [peldanyType, setType] = useState<TypeReadDto>();
     const peldanyService: PeldanyService = services.get(PeldanyService);
+    const typeService: TypeService = services.get(TypeService);
 
     useEffect(() => {
         console.log("Alagút az éjszaka, fut a vonat!");
@@ -33,19 +37,22 @@ export function SinglePeldanyPage()
         {
             setPeldany(result);
             console.log(peldany);
+
+            let type = await typeService.get(result.typeId);
+            setType(type);
         }
     }
 
-    if (!peldany || !peldany.id)
+    if (!peldany || !peldany.id || !peldanyType || !peldanyType.id)
     {
         return (<></>)
     }
 
     return(
         <div className={styles.root}>
-            <h1>{peldany.id}</h1>
+            <h1>{peldanyType.name}</h1>
             <div className={styles.mainDiv}>
-                <img alt="image" src={"https://placehold.co/150"}/>
+                <img alt="image" src={peldanyType.icon ?? "https://placehold.co/150"}/>
                 <table>
                     <caption><h2>Description</h2></caption>
                     <thead>
@@ -58,7 +65,7 @@ export function SinglePeldanyPage()
                     <tbody>
                     <tr>
                         <th>Type</th>
-                        <td>{peldany.typeId}</td>
+                        <td>{peldany.id}</td>
                     </tr>
 
                     <tr>
