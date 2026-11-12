@@ -23,7 +23,15 @@ export function TypeSearchPage() {
     async function Load()
     {
         let count = await typeService.searchCount(searchquery);
-        setMaxPage(Math.ceil(count / LIMIT));
+        let newmax = Math.ceil(count / LIMIT);
+        setMaxPage(newmax);
+        if (count === 0)
+        {
+            return;
+        }
+        if (pagenum > newmax) {
+            setPagenum(newmax);
+        }
 
         let result = await typeService.search(searchquery,LIMIT,LIMIT*(pagenum-1));
         setdata(result);
@@ -44,10 +52,10 @@ export function TypeSearchPage() {
         <>
             <NavBar onSearchQueryChange={setSearchquery} />
                 {
-                    (data)?
+                    (data && maxPage > 0)?
                         <DataGrid caption={"Típusok"} data={data} clickEvent={ClickedType} pageNumber={pagenum} maxPageNumber={maxPage} setPageNumber={setPagenum} showColums={[false,true,true]}/>
                         :
-                        <p>Betöltés...</p>
+                        <></>
                 }
         </>
     )
