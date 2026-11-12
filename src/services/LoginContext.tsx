@@ -8,6 +8,7 @@ interface LoginProps {
     user?: UserReadDto;
     setUser: (user: UserReadDto) => void;
     isLoggedIn: boolean;
+    setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
 const LoginContext = createContext({});
@@ -18,25 +19,29 @@ export function LoginProvider({ children}: {children: ReactNode }) {
     const userservice: UserService = services.get(UserService);
     const [user,setUser] = useState<UserReadDto | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    async function getUserFromCookie()
+
+    async function Load()
     {
         try
         {
-            //setUser(await userservice.getUserFromCookie());
+            setUser(await userservice.getUserFromCookie());
             setIsLoggedIn(true);
         }
-        catch(e)
+        catch(err)
         {
-           setIsLoggedIn(false);
+            setUser(null);
+            setIsLoggedIn(false);
         }
+        console.log(user);
     }
 
     useEffect(() => {
-        getUserFromCookie();
+        Load();
     }, []);
 
+
     return (
-        <LoginContext.Provider value={{user,setUser}}>
+        <LoginContext.Provider value={{user,setUser,isLoggedIn, setIsLoggedIn}}>
             {children}
         </LoginContext.Provider>
     )

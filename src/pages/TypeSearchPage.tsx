@@ -6,14 +6,13 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {TypeService} from "../services/TypeService.ts";
 import {DataGrid} from "../components/DataGrid.tsx";
-import type {PagedDto} from "../dtos/PagedDto.ts";
 
 export function TypeSearchPage() {
     const services: Container = useContainer();
     const typeService: TypeService = services.get(TypeService);
     const navigate = useNavigate();
 
-    const [data,setdata] = useState<PagedDto<TypeReadDto> | null>();
+    const [data,setdata] = useState<TypeReadDto[]>([]);
     const [pagenum,setPagenum] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
 
