@@ -42,55 +42,52 @@ export function TypePage()
         }
     }
 
+    async function Order()
+    {
+        if (!user || !user.id){
+            navigate("/login");
+            return;
+        }
+        await rendelesService.post(
+            {
+                typeId : item.id,
+                userId : user.id,
+                date : new Date(),
+                quantity : quantity,
+                completedQuantity : 0
+            }
+        )
+        navigate("/");
+    }
+
     if (!item || !item.id)
     {
         return (<></>)
     }
     return (
         <>
-            <NavBar onSearchQueryChange={()=>{}}/>
-                <div className={styles.root}>
+        <NavBar/>
+        <div className={styles.root}>
+        <div className={styles.productContainer}>
+            <div className={styles.imageWrapper}>
+                <span className={styles.imagePlaceholder}>kép helye</span>
+            </div>
 
-                    <div className={styles.dataDiv}>
-                        <h1>{item.name}</h1>
-                        <img style={{minWidth:"400px",minHeight:"400px"}} src={item.icon ?? "https://placehold.co/150"}/>
-                        <p>{item.description}</p>
+            <div className={styles.productDetails}>
+                <h1 className={styles.productTitle}>{item.name}</h1>
+                <p className={styles.productDescription}>
+                    {item.description}
+                </p>
+
+                <div className={styles.purchaseBox}>
+                    <div>
+                        <label htmlFor="quantity" className={styles.quantityLabel}>Mennyiség</label>
+                        <input type="number" id="quantity" className={styles.quantityInput} value={quantity} onChange={e =>setQuantity(e.target.valueAsNumber)} min="1"/>
                     </div>
-
-                    <div className={styles.rendelesDiv}>
-                        <input type={"number"} step={1} min={1} value={quantity} className={styles.quantityInput} onChange={(e) => setQuantity(e.target.valueAsNumber)}/>
-                        <button className={styles.orderButton} onClick={async () => {
-                            if (!user || !user.id){
-                                navigate("/login");
-                                return;
-                            }
-                            await rendelesService.post(
-                                {
-                                    typeId : item.id,
-                                    userId : user.id,
-                                    date : new Date(),
-                                    quantity : quantity,
-                                    completedQuantity : 0
-                                }
-                            )
-                            navigate("/");
-                        }}>Rendelés</button>
-                    </div>
-
-                    <div className={styles.buttonDiv}>
-                        <button className={styles.deleteButton} onClick={async () => {
-                            await typeService.delete(item.id)
-                            console.log(`kitörölve: ${item.id}`);
-                            navigate("/");
-                        }}>Törlés</button>
-
-                        <button className={styles.peldanyButton}
-                                onClick={() => {
-                                    navigate(`/peldany/${item.id}`);
-                        }}>Példányok</button>
-
-                    </div>
+                    <button className={styles.orderBtn} onClick={Order}>Rendelés</button>
                 </div>
-        </>
-    )
-}
+            </div>
+        </div>
+        </div>
+    </>
+    )};
