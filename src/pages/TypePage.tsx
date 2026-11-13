@@ -50,9 +50,9 @@ export function TypePage()
         }
         if (!item)
         {
-            throw "Nincs kiválasztott tétel!";
+            navigate("/");
+            return;
         }
-
 
         await rendelesService.post(
             {
@@ -64,6 +64,29 @@ export function TypePage()
             }
         )
         navigate("/");
+    }
+
+    async function Delete()
+    {
+        if (!item)
+        {
+            navigate("/");
+            return;
+        }
+
+        await typeService.delete(item.id);
+        navigate("/");
+    }
+
+    async function Peldanyok()
+    {
+        if (!item)
+        {
+            navigate("/");
+            return;
+        }
+
+        navigate(`/peldany/${item.id}`);
     }
 
     if (!item || !item.id)
@@ -93,7 +116,10 @@ export function TypePage()
                     <button className={styles.orderBtn} onClick={Order}>Rendelés</button>
                 </div>
             </div>
-            <div style={{display:"flex",gridColumnStart:1,gridColumnEnd:3}}></div>
+            <div className={styles.adminButtonDiv}>
+                <button className={styles.peldanyButton} onClick={Peldanyok}>Példányok</button>
+                <button className={styles.deleteButton} onClick={Delete}>Törlés</button>
+            </div>
         </div>
         </div>
     </>

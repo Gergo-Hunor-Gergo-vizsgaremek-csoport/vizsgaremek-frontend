@@ -1,5 +1,21 @@
 @use "../themes/index";
 
+@mixin buttonMixin
+{
+  color: index.$text;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    filter: brightness(70%);
+  }
+}
+
 .root {
   background-color: index.$bg;
   color: index.$text;
@@ -121,18 +137,30 @@
   }
 
   .orderBtn {
+    @include buttonMixin;
     background: index.$success;
-    color: index.$text;
-    border: none;
-    padding: 14px 24px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    text-align: center;
   }
 
-  .orderBtn:hover {
-    background-color: index.$accent-hover;
+  .adminButtonDiv
+  {
+    display: flex;
+    flex-direction: row;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .deleteButton
+  {
+    @include buttonMixin;
+    background-color: index.$danger;
+  }
+
+  .peldanyButton
+  {
+    @include buttonMixin;
+    background-color: index.$accent;
   }
 }
