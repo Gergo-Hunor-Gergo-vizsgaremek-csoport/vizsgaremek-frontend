@@ -1,91 +1,166 @@
-@mixin buttonstyles
-{
-  min-width: fit-content;
-  min-height: fit-content;
-  padding: 1vw 2vw;
-  margin: 1vw 2vw;
-  display:inline-block;
-  justify-self: center;
-  text-align:center;
-  color: white;
-  transition: 0.2s;
-  width: 30vw;
+@use "../themes/index";
 
-  &:hover{
-    filter: brightness(80%);
+@mixin buttonMixin
+{
+  color: index.$text;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    filter: brightness(70%);
   }
 }
 
-//number input nyilak elrejtése
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type=number] {
-  -moz-appearance: textfield; /* Firefox */
-}
-
-
-
-.root
-{
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  height: 100%;
-  min-width: fit-content;
-  background-color: darkgray;
+.root {
+  background-color: index.$bg;
+  color: index.$text;
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  color: white;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 
-  h1{
-    color: white;
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
-  .buttonDiv
-  {
-    margin-top:1em;
-    margin-left: auto;
-    margin-right: auto;
-    display:grid;
+  input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+  }
+
+  .productContainer {
+    background: index.$surface;
+    border: 1px solid index.$border;
+    border-radius: 20px;
+    display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 40px;
+    max-width: 900px;
+    width: 100%;
+    padding: 40px;
+    align-items: center;
   }
 
-  .quantityInput{
-    width: 5vw;
-    height: 3vh;
-    justify-self: center;
-    align-self: end;
+  @media (max-width: 900px) {
+    .productContainer {
+      grid-template-columns: 1fr;
+      padding: 24px;
+      gap: 24px;
+    }
+  }
+
+
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: index.$elevated;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid index.$border;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .imagePlaceholder {
+    color: index.$faint;
+  }
+
+  /* Tartalom szekció */
+  .productDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .productTitle {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: index.$text;
+  }
+
+  .productDescription {
+    color: index.$text;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .purchaseBox {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 10px;
+    background: index.$elevated;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid index.$border;
+  }
+
+  .quantityLabel {
+    font-size: 0.875rem;
+    color: index.$text;
+    font-weight: 500;
     text-align: center;
   }
 
-  .mainDiv
-  {
-    margin-left: auto;
-    margin-right: auto;
+  .quantityInput {
+    box-sizing: border-box;
+    background: index.$surface;
+    border: 1px solid index.$border;
+    color: index.$text;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+    text-align: center;
   }
 
+  .quantityInput:focus {
+    border-color: index.$accent;
+  }
 
+  .orderBtn {
+    @include buttonMixin;
+    background: index.$success;
+  }
+
+  .adminButtonDiv
+  {
+    display: flex;
+    flex-direction: row;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
 
   .deleteButton
   {
-    background-color: red;
-    @include buttonstyles;
-  }
-  .orderButton
-  {
-    background-color: green;
-    @include buttonstyles;
+    @include buttonMixin;
+    background-color: index.$danger;
   }
 
   .peldanyButton
   {
-    background-color: blue;
-    @include buttonstyles;
+    @include buttonMixin;
+    background-color: index.$accent;
   }
 }

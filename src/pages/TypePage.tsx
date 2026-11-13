@@ -42,52 +42,85 @@ export function TypePage()
         }
     }
 
+    async function Order()
+    {
+        if (!user || !user.id){
+            navigate("/login");
+            return;
+        }
+        if (!item)
+        {
+            navigate("/");
+            return;
+        }
+
+        await rendelesService.post(
+            {
+                typeId : item.id,
+                userId : user.id,
+                date : new Date(),
+                quantity : quantity,
+                completedQuantity : 0
+            }
+        )
+        navigate("/");
+    }
+
+    async function Delete()
+    {
+        if (!item)
+        {
+            navigate("/");
+            return;
+        }
+
+        await typeService.delete(item.id);
+        navigate("/");
+    }
+
+    async function Peldanyok()
+    {
+        if (!item)
+        {
+            navigate("/");
+            return;
+        }
+
+        navigate(`/peldany/${item.id}`);
+    }
+
     if (!item || !item.id)
     {
         return (<></>)
     }
     return (
+        <>
+        <NavBar/>
         <div className={styles.root}>
-            <NavBar onSearchQueryChange={()=>{}}/>
-            <div>
-                <div className={styles.mainDiv}>
-                    <h1>{item.name}</h1>
-                    <img alt="image" src={item.icon ?? "https://placehold.co/150"}/>
-                    <p>{item.description}</p>
-                    <div className={styles.buttonDiv}>
-                        <p></p>
-                        <input type={"number"} step={1} min={1} value={quantity} className={styles.quantityInput} onChange={(e) => setQuantity(e.target.valueAsNumber)}/>
-                        <button className={styles.deleteButton} onClick={async () => {
-                            await typeService.delete(item.id)
-                            console.log(`kitörölve: ${item.id}`);
-                            navigate("/");
-                        }}>Törlés</button>
+        <div className={styles.productContainer}>
+            <div className={styles.imageWrapper}>
+                <img className={styles.imagePlaceholder} alt={"kép helye"} />
+            </div>
 
-                        <button className={styles.orderButton} onClick={async () => {
-                            if (!user || !user.id){
-                                navigate("/login");
-                                return;
-                            }
-                            await rendelesService.post(
-                                {
-                                    typeId : item.id,
-                                    userId : user.id,
-                                    date : new Date(),
-                                    quantity : quantity,
-                                    completedQuantity : 0
-                                }
-                            )
-                            navigate("/");
-                        }}>Rendelés</button>
+            <div className={styles.productDetails}>
+                <h1 className={styles.productTitle}>{item.name}</h1>
+                <p className={styles.productDescription}>
+                    {item.description}
+                </p>
 
-                        <button className={styles.peldanyButton}
-                                onClick={() => {
-                                    navigate(`/peldany/${item.id}`);
-                        }}>Példányok</button>
-
+                <div className={styles.purchaseBox}>
+                    <div>
+                        <label htmlFor="quantity" className={styles.quantityLabel}>Mennyiség</label>
+                        <input type="number" id="quantity" className={styles.quantityInput} value={quantity} onChange={e =>setQuantity(e.target.valueAsNumber)} min="1"/>
                     </div>
+                    <button className={styles.orderBtn} onClick={Order}>Rendelés</button>
                 </div>
             </div>
+            <div className={styles.adminButtonDiv}>
+                <button className={styles.peldanyButton} onClick={Peldanyok}>Példányok</button>
+                <button className={styles.deleteButton} onClick={Delete}>Törlés</button>
+            </div>
         </div>
-    )
-}
+        </div>
+    </>
+    )};
