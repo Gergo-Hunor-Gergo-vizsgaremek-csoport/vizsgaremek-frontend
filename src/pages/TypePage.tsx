@@ -48,6 +48,12 @@ export function TypePage()
             navigate("/login");
             return;
         }
+        if (!item)
+        {
+            throw "Nincs kiválasztott tétel!";
+        }
+
+
         await rendelesService.post(
             {
                 typeId : item.id,
@@ -70,7 +76,7 @@ export function TypePage()
         <div className={styles.root}>
         <div className={styles.productContainer}>
             <div className={styles.imageWrapper}>
-                <span className={styles.imagePlaceholder}>kép helye</span>
+                <img className={styles.imagePlaceholder} alt={"kép helye"} />
             </div>
 
             <div className={styles.productDetails}>
@@ -87,6 +93,7 @@ export function TypePage()
                     <button className={styles.orderBtn} onClick={Order}>Rendelés</button>
                 </div>
             </div>
+            <div style={{display:"flex",gridColumnStart:1,gridColumnEnd:3}}></div>
         </div>
         </div>
     </>

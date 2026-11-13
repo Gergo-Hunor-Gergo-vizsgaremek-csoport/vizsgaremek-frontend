@@ -3,126 +3,136 @@
 .root {
   background-color: index.$bg;
   color: index.$text;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-}
 
-.productContainer {
-  background: index.$surface;
-  border: 1px solid index.$border;
-  border-radius: 20px;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 40px;
-  max-width: 900px;
-  width: 100%;
-  padding: 40px;
-  align-items: center;
-}
 
-@media (max-width: 900px) {
-  .productContainer {
-    grid-template-columns: 1fr;
-    padding: 24px;
-    gap: 24px;
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
-}
 
-.imageWrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background: #21252f;
-  border-radius: 14px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #2e3644;
-}
+  input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+  }
 
-.imageWrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  .productContainer {
+    background: index.$surface;
+    border: 1px solid index.$border;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 40px;
+    max-width: 900px;
+    width: 100%;
+    padding: 40px;
+    align-items: center;
+  }
 
-.imagePlaceholder {
-  color: #8c95a6;
-  font-size: 1rem;
-  font-weight: 500;
-}
+  @media (max-width: 900px) {
+    .productContainer {
+      grid-template-columns: 1fr;
+      padding: 24px;
+      gap: 24px;
+    }
+  }
 
-/* Tartalom szekció */
-.productDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
 
-.productTitle {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: -0.5px;
-}
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: index.$elevated;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid index.$border;
 
-.productDescription {
-  color: #9ca3af;
-  font-size: 1rem;
-  line-height: 1.6;
-}
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
 
-.purchaseBox {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 10px;
-  background: #12141a;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #222733;
-}
+  .imagePlaceholder {
+    color: index.$faint;
+  }
 
-.quantityLabel {
-  font-size: 0.875rem;
-  color: #9ca3af;
-  font-weight: 500;
-  text-align: center;
-}
+  /* Tartalom szekció */
+  .productDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-.quantityInput {
-  box-sizing: border-box;
-  background: #1c202a;
-  border: 1px solid #323a4b;
-  color: #ffffff;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-size: 1rem;
-  width: 100%;
-  outline: none;
-  text-align: center;
-}
+  .productTitle {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: index.$text;
+  }
 
-.quantityInput:focus {
-  border-color: #10b981;
-}
+  .productDescription {
+    color: index.$text;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
 
-.orderBtn {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: center;
-}
+  .purchaseBox {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 10px;
+    background: index.$elevated;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid index.$border;
+  }
 
-.order-btn:hover {
+  .quantityLabel {
+    font-size: 0.875rem;
+    color: index.$text;
+    font-weight: 500;
+    text-align: center;
+  }
 
+  .quantityInput {
+    box-sizing: border-box;
+    background: index.$surface;
+    border: 1px solid index.$border;
+    color: index.$text;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+    text-align: center;
+  }
+
+  .quantityInput:focus {
+    border-color: index.$accent;
+  }
+
+  .orderBtn {
+    background: index.$success;
+    color: index.$text;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .orderBtn:hover {
+    background-color: index.$accent-hover;
+  }
 }
