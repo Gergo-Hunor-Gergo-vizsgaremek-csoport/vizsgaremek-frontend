@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {TypeService} from "../services/TypeService.ts";
 import {DataGrid} from "../components/DataGrid.tsx";
+import styles from "./TypeSearchPage.module.scss";
+import {AddTypeDialog} from "../components/AddTypeDialog.tsx";
 
 export function TypeSearchPage() {
     const services: Container = useContainer();
@@ -57,6 +59,10 @@ export function TypeSearchPage() {
                         :
                         <></>
                 }
+                <div className={styles.buttonDiv}>
+                    <button className={styles.addTypeButton}>Típus hozzáadása</button>
+                </div>
+            <AddTypeDialog></AddTypeDialog>
         </>
     )
 }
