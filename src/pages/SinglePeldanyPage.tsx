@@ -2,6 +2,7 @@ import {Container} from "inversify";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {useParams} from "react-router";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
 //import {NavBar} from "../components/NavBar.tsx";
 import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
@@ -13,15 +14,39 @@ export function SinglePeldanyPage()
 {
     const services: Container = useContainer();
     const {peldanyId} = useParams();
+    const navigate = useNavigate();
     const [peldany,setPeldany] = useState<PeldanyReadDto>();
     const [peldanyType, setType] = useState<TypeReadDto>();
+    const [peldanyList, setPeldanyList] = useState<PeldanyReadDto[]>([]);
     const peldanyService: PeldanyService = services.get(PeldanyService);
     const typeService: TypeService = services.get(TypeService);
 
     useEffect(() => {
         console.log("Alagút az éjszaka, fut a vonat!");
         Load();
-    }, []);
+    }, [useParams()]);
+
+    function PageTurner()
+    {
+        if(peldany)
+        {
+            let id = peldanyList.map(x => x.id).indexOf(peldany.id);
+            console.log(`Ez az aktuális oldal id-je: ${id}`);
+            navigate(`/single/${peldanyList[id + 1].id}`, {replace: true});
+            console.log(`Ez ide mutat: ${peldanyList[id + 1].id}`);
+        }
+    }
+
+    function PageBackTurner()
+    {
+        if(peldany)
+        {
+            let id = peldanyList.map(x => x.id).indexOf(peldany.id);
+            console.log(`Ez az aktuális oldal id-je: ${id}`);
+            navigate(`/single/${peldanyList[id - 1].id}`, {replace: true});
+            console.log(`Ez ide vissza mutat: ${peldanyList[id + 1].id}`);
+        }
+    }
 
     async function Load()
     {
@@ -40,6 +65,15 @@ export function SinglePeldanyPage()
 
             let type = await typeService.get(result.typeId);
             setType(type);
+
+            let list = await peldanyService.getByTypeId(result.typeId);
+            setPeldanyList(list);
+            console.log(result);
+            console.log(list);
+            console.log(`Mutatott példány helye a listában? ${list.map(x=>x.id).indexOf(result.id)}`);
+            console.log(`Mutatott példány helye a listában? ${list.indexOf(result)}`);
+            console.log(`Ugrani akarok ide: ${list.map(x=>x.id).indexOf(result.id) + 1}`);
+
         }
     }
 
@@ -50,6 +84,8 @@ export function SinglePeldanyPage()
 
     return(
         <div className={styles.root}>
+            <button onClick={PageTurner}>Következő</button>
+            <button onClick={PageBackTurner}>Vissza</button>
             <h1>{peldanyType.name}</h1>
             <div className={styles.mainDiv}>
                 <img alt="image" src={peldanyType.icon ?? "https://placehold.co/150"}/>
