@@ -18,9 +18,11 @@ export function TypeSearchPage() {
     const [pagenum,setPagenum] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
 
+    const [isOpen, setIsOpen] = useState(false);    //add type dialog
+
     const [searchquery, setSearchquery] = useState("");
 
-    const LIMIT = 2;
+    const LIMIT = 20;
 
     async function Load()
     {
@@ -40,8 +42,11 @@ export function TypeSearchPage() {
     }
 
     useEffect(() => {
-        Load();
-    }, [searchquery,pagenum]);
+        if (!isOpen)
+        {
+            Load();
+        }
+    }, [searchquery,pagenum,isOpen]);
 
 
 
@@ -60,9 +65,9 @@ export function TypeSearchPage() {
                         <></>
                 }
                 <div className={styles.buttonDiv}>
-                    <button className={styles.addTypeButton}>Típus hozzáadása</button>
+                    <button className={styles.addTypeButton} onClick={() => setIsOpen(true)}>Típus hozzáadása</button>
                 </div>
-            <AddTypeDialog></AddTypeDialog>
+            <AddTypeDialog isOpen={isOpen} setIsOpen={setIsOpen}></AddTypeDialog>
         </>
     )
 }
