@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {TypeService} from "../services/TypeService.ts";
 import {DataGrid} from "../components/DataGrid.tsx";
+import styles from "./TypeSearchPage.module.scss";
+import {AddTypeDialog} from "../components/AddTypeDialog.tsx";
 
 export function TypeSearchPage() {
     const services: Container = useContainer();
@@ -16,9 +18,11 @@ export function TypeSearchPage() {
     const [pagenum,setPagenum] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
 
+    const [isOpen, setIsOpen] = useState(false);    //add type dialog
+
     const [searchquery, setSearchquery] = useState("");
 
-    const LIMIT = 2;
+    const LIMIT = 20;
 
     async function Load()
     {
@@ -38,8 +42,11 @@ export function TypeSearchPage() {
     }
 
     useEffect(() => {
-        Load();
-    }, [searchquery,pagenum]);
+        if (!isOpen)
+        {
+            Load();
+        }
+    }, [searchquery,pagenum,isOpen]);
 
 
 
@@ -57,6 +64,10 @@ export function TypeSearchPage() {
                         :
                         <></>
                 }
+                <div className={styles.buttonDiv}>
+                    <button className={styles.addTypeButton} onClick={() => setIsOpen(true)}>Típus hozzáadása</button>
+                </div>
+            <AddTypeDialog isOpen={isOpen} setIsOpen={setIsOpen}></AddTypeDialog>
         </>
     )
 }

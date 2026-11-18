@@ -1,0 +1,66 @@
+@use "../themes/index";
+
+.root[open] {
+  width: min(50vw,500px);
+  min-width: 300px;
+  box-sizing: border-box;
+  height: 50vh;
+  top: 0;
+  translate: 0 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: index.$elevated-2;
+  color: index.$text;
+  border: none;
+  border-radius: 20px;
+
+  h1{
+    text-align: center;
+  }
+
+  .addTypeDiv
+  {
+
+    input{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 1vh;
+      background-color: index.$surface;
+      border: none;
+      border-radius: 10px;
+      font-size: 26px;
+      color: index.$text;
+      text-align: center;
+      box-sizing: border-box;
+      max-width: 50vw;
+
+
+      &:focus-visible
+      {
+        outline: 2px solid index.$accent
+      }
+
+      &::placeholder {
+        color: index.$faint;
+      }
+    }
+
+    .submitButton{
+      margin: auto;
+      font-size: 20px;
+      padding: 1vh 1vw;
+      border: none;
+      border-radius: 10px;
+      display: flex;
+      background-color: index.$success;
+      color: index.$text;
+
+      &:hover{
+        filter: brightness(70%);
+      }
+    }
+  }
+}

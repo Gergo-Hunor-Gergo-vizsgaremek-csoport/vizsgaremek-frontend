@@ -1,5 +1,32 @@
-.root
+@use "../themes/index";
+
+@mixin buttonMixin
 {
-  margin-left: auto;
-  margin-right: auto;
+  color: index.$text;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover
+  {
+    filter: brightness(70%);
+  }
+}
+
+
+.buttonDiv
+  {
+    display: grid;
+    justify-items: center;
+  }
+
+.addTypeButton
+{
+  @include buttonMixin;
+  background-color: index.$success;
+
 }
