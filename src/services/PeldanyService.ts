@@ -18,9 +18,17 @@ export class PeldanyService {
     }
 
     async getByTypeId(
-        typeId:string
+        typeId:string,
+        limit?:number,
+        offset?:number
     ): Promise<PeldanyReadDto[]> {
-        return this.api.get<PeldanyReadDto[]>(`/Peldany/by-typeId/${typeId}`);
+        return this.api.get<PeldanyReadDto[]>(`/Peldany/by-typeId/${typeId}?limit=${limit}&offset=${offset}`);
+    }
+
+    async peldanyCounter(
+        q:string
+    ): Promise<number> {
+        return this.api.get<number>(`/Peldany/count?q=${q}`);
     }
 
     /*async search(

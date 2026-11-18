@@ -26,27 +26,6 @@ export function SinglePeldanyPage()
         Load();
     }, [useParams()]);
 
-    function PageTurner()
-    {
-        if(peldany)
-        {
-            let id = peldanyList.map(x => x.id).indexOf(peldany.id);
-            console.log(`Ez az aktuális oldal id-je: ${id}`);
-            navigate(`/single/${peldanyList[id + 1].id}`, {replace: true});
-            console.log(`Ez ide mutat: ${peldanyList[id + 1].id}`);
-        }
-    }
-
-    function PageBackTurner()
-    {
-        if(peldany)
-        {
-            let id = peldanyList.map(x => x.id).indexOf(peldany.id);
-            console.log(`Ez az aktuális oldal id-je: ${id}`);
-            navigate(`/single/${peldanyList[id - 1].id}`, {replace: true});
-            console.log(`Ez ide vissza mutat: ${peldanyList[id + 1].id}`);
-        }
-    }
 
     async function Load()
     {
@@ -66,14 +45,39 @@ export function SinglePeldanyPage()
             let type = await typeService.get(result.typeId);
             setType(type);
 
-            let list = await peldanyService.getByTypeId(result.typeId);
+            let count = await peldanyService.peldanyCounter(result.typeId);
+            console.log(`Íme a counter eredménye: ${count}`);
+
+            let list = await peldanyService.getByTypeId(result.typeId,count,0);
             setPeldanyList(list);
-            console.log(result);
-            console.log(list);
+            console.log(`Példány lista tartalmának száma: ${peldanyList.length}`);
+            console.log(`Tartalom: ${list}`);
             console.log(`Mutatott példány helye a listában? ${list.map(x=>x.id).indexOf(result.id)}`);
             console.log(`Mutatott példány helye a listában? ${list.indexOf(result)}`);
             console.log(`Ugrani akarok ide: ${list.map(x=>x.id).indexOf(result.id) + 1}`);
 
+        }
+    }
+
+    function PageTurner()
+    {
+        if(peldany)
+        {
+            let place = peldanyList.map(x => x.id).indexOf(peldany.id);
+            console.log(`Ez az aktuális oldal id-je: ${place}`);
+            navigate(`/single/${peldanyList[place + 1].id}`, {replace: true});
+            console.log(`Ez ide mutat: ${peldanyList[place + 1].id}`);
+        }
+    }
+
+    function PageBackTurner()
+    {
+        if(peldany)
+        {
+            let place = peldanyList.map(x => x.id).indexOf(peldany.id);
+            console.log(`Ez az aktuális oldal id-je: ${place}`);
+            navigate(`/single/${peldanyList[place - 1].id}`, {replace: true});
+            console.log(`Ez ide vissza mutat: ${peldanyList[place + 1].id}`);
         }
     }
 
@@ -108,8 +112,8 @@ export function SinglePeldanyPage()
                         <th>Serialnumber</th>
                         {
                             (peldany.serialNumber === "string")
-                                ?<td>Ismeretlen</td>
-                                :<td>{peldany.serialNumber}</td>
+                                ? <td>Ismeretlen</td>
+                                : <td>{peldany.serialNumber}</td>
                         }
                     </tr>
                     </tbody>
