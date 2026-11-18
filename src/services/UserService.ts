@@ -4,6 +4,8 @@ import type {UserReadDto} from "../dtos/UserReadDto.ts";
 import type {KolcsonzesReadDto} from "../dtos/KolcsonzesReadDto.ts";
 import type {RendelesReadDto} from "../dtos/RendelesReadDto.ts";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
+import type {TypeWriteDto} from "../dtos/TypeWriteDto.ts";
+import type {UserWriteDto} from "../dtos/UserWriteDto.ts";
 
 @injectable()
 export class UserService {
@@ -20,10 +22,23 @@ export class UserService {
         return this.api.get<UserReadDto[]>(`/User?q=${q}&limit=${limit}&offset=${offset}`);
         }
 
+        async searchCount(
+            q?: string
+        ): Promise<number> {
+            return this.api.get<number>(`/User/count?q=${q}`);
+        }
+
         async get(
             id:string
         ): Promise<UserReadDto> {
         return this.api.get<UserReadDto>(`/User/${id}`);
+        }
+
+        async post(
+            dto: UserWriteDto
+        ): Promise<UserReadDto>
+        {
+            return this.api.post<UserReadDto>(`/User`,dto);
         }
 
         async login(

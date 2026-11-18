@@ -35,7 +35,6 @@ export class TypeService {
         dto: TypeWriteDto
         ): Promise<unknown>
     {
-        console.log(dto);
         return this.api.post<unknown>(`/Type`,dto);
     }
 

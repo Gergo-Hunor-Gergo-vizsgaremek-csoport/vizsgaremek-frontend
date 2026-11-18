@@ -7,6 +7,7 @@ import type {UserReadDto} from "../dtos/UserReadDto.ts";
 import {useEffect, useState} from "react";
 import {DataGrid} from "../components/DataGrid.tsx";
 import {useNavigate} from "react-router";
+import {AddUserDialog} from "../components/AddUserDialog.tsx";
 
 export function UserAdminPage() {
     const services: Container = useContainer();
@@ -14,19 +15,36 @@ export function UserAdminPage() {
     const [data,setdata] = useState<UserReadDto[] | null>();
 
     const [searchquery, setSearchquery] = useState("");
+    const [pagenum, setPagenum] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
+
+
+    const [isOpen, setIsOpen] = useState(false);    //add user dialog
 
     const navigate = useNavigate();
+
+
+    const LIMIT = 10;
     async function Load()
     {
-        let result = await userService.search(searchquery,10,0);
-        console.log(searchquery);
-        console.log("searchresult",result);
+        let count = await userService.searchCount(searchquery);
+        let newmax = Math.ceil(count / LIMIT);
+        setMaxPage(newmax);
+        if (count === 0)
+        {
+            return;
+        }
+        if (pagenum > newmax) {
+            setPagenum(newmax);
+        }
+
+        let result = await userService.search(searchquery,LIMIT,LIMIT*(pagenum-1));
         setdata(result);
     }
 
     useEffect(() => {
         Load();
-    }, [searchquery])
+    }, [searchquery, pagenum, isOpen]);
 
     function UserClick(id:string)
     {
@@ -36,14 +54,16 @@ export function UserAdminPage() {
     return (
         <>
         <NavBar onSearchQueryChange={setSearchquery} />
-            <div className={styles.root}>
                 {
                     (data)?
-                <DataGrid caption={"Felhasználók"} data={data} clickEvent={UserClick} showColums={[false,true,true]}/>
+                <DataGrid caption={"Felhasználók"} data={data} pageNumber={pagenum} setPageNumber={setPagenum} maxPageNumber={maxPage} clickEvent={UserClick} showColums={[false,true,true]}/>
                         :
                         <p>Betöltés...</p>
                 }
+            <div className={styles.buttonDiv}>
+                <button className={styles.addUserButton} onClick={() => setIsOpen(true)}>Felhasználó hozzáadása</button>
             </div>
+            <AddUserDialog isOpen={isOpen} setIsOpen={setIsOpen}></AddUserDialog>
         </>
     )
 }

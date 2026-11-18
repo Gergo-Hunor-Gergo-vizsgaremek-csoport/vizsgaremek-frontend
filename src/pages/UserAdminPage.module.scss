@@ -1,12 +1,31 @@
-.root
-{
-  margin-left: auto;
-  margin-right: auto;
+@use "../themes/index";
 
-  .maintable
+@mixin buttonMixin
+{
+  color: index.$text;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover
   {
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
+    filter: brightness(70%);
   }
+}
+
+.buttonDiv
+{
+  display: grid;
+  justify-items: center;
+}
+
+.addUserButton
+{
+  @include buttonMixin;
+  background-color: index.$success;
+
 }
