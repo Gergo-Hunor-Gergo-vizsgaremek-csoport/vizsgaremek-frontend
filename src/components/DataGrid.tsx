@@ -11,12 +11,30 @@ type DataGridProps<T extends object> = {
     maxPageNumber?: number
 
     showColums?: boolean[],
+    /** Column headers to show when `data` is empty (no row to derive them from). */
+    columns?: string[],
 }
 
-export function DataGrid<T extends object>({ data, caption, clickEvent,showColums,pageNumber=1,setPageNumber=()=>{},maxPageNumber=1}: DataGridProps<T>): JSX.Element {
+export function DataGrid<T extends object>({ data, caption, clickEvent,showColums,pageNumber=1,setPageNumber=()=>{},maxPageNumber=1,columns}: DataGridProps<T>): JSX.Element {
 
     if (data.length === 0) {
-        return (<></>);
+        return (
+            <div className={styles.root}>
+                <h1>{caption}</h1>
+                <div className={styles.wrapper}>
+                    <table>
+                        <thead>
+                        <tr>
+                            {(columns ?? []).map((key, index) => (
+                                <th key={key} hidden={showColums?.[index] === false}>{key}</th>
+                            ))}
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        );
     }
 
     //showColums = [false, true, true, false, true, false];
