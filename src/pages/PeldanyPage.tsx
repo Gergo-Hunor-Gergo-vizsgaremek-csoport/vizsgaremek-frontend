@@ -32,8 +32,11 @@ export function PeldanyPage()
             let result = await peldanyService.getByTypeId(peldanyTypeId, limit, limit * (pageNumber - 1));
             console.log("API válasz:", result);
             setData(result);
-            setMaxPage(Math.ceil(result.length / limit));
+            let allPeldany = await peldanyService.peldanyCounter(peldanyTypeId);
+            setMaxPage(Math.ceil(allPeldany / limit));
             console.log(`Az összes oldal száma: ${maxPage}`);
+            console.log(`Adatok mennyisége: ${result.length}`);
+            console.log(`Tényleg az össz mennyiség: ${allPeldany}`);
         } catch (error) {
             console.error("Hiba a lekérés során:", error);
         }
@@ -50,7 +53,7 @@ export function PeldanyPage()
             <NavBar onSearchQueryChange={()=>{}} />
             {
                 (data && data !== null)?
-                    <DataGrid caption={"Single példány"} data={data} pageNumber={pageNumber} maxPageNumber={maxPage} setPageNumber={setPageNumber} clickEvent={ClickedOnSingle} showColums={[true,false,true, true, false, false, false, false, false, false, false, false, false, false]}/>
+                    <DataGrid caption={"Single példány"} data={data} clickEvent={ClickedOnSingle} pageNumber={pageNumber} maxPageNumber={maxPage} setPageNumber={setPageNumber} showColums={[true,false,true, true, false, false, false, false, false, false, false, false, false, false]}/>
                     :
                     <p>Betöltés...</p>
             }
