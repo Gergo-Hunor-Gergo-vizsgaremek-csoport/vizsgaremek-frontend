@@ -88,8 +88,10 @@ export function SinglePeldanyPage()
 
     return(
         <div className={styles.root}>
-            <button onClick={PageTurner}>Következő</button>
-            <button onClick={PageBackTurner}>Vissza</button>
+            <div className={styles.topNavigation}>
+                <button onClick={PageBackTurner}>&laquo;</button>
+                <button onClick={PageTurner}>&raquo;</button>
+            </div>
             <h1>{peldanyType.name}</h1>
             <div className={styles.mainDiv}>
                 <img alt="image" src={peldanyType.icon ?? "https://placehold.co/150"}/>

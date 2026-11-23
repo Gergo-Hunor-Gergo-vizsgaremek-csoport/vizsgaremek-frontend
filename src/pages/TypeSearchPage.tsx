@@ -22,7 +22,7 @@ export function TypeSearchPage() {
 
     const [searchquery, setSearchquery] = useState("");
 
-    const LIMIT = 20;
+    const LIMIT = 10;
 
     async function Load()
     {
