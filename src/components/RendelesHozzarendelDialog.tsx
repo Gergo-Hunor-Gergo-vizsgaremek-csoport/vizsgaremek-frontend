@@ -22,6 +22,8 @@ export function RendelesHozzarendelDialog({isOpen, setIsOpen, rendeles}: Rendele
     const rendelesService = services.get(RendelesService);
 
     const dialogRef = useRef<HTMLDialogElement>(null);
+    const okButtonRef = useRef<HTMLButtonElement>(null);
+
     const [selectedPeldanys,setSelectedPeldanys] = useState<PeldanyReadDto[]>([]);
     const [peldanys,setPeldanys] = useState<PeldanyReadDto[]>();
 
@@ -68,15 +70,10 @@ export function RendelesHozzarendelDialog({isOpen, setIsOpen, rendeles}: Rendele
     function ResetSelectedPeldanys(){
         //a divek visszaszínezése szürkére és a lista kiürítése
         selectedPeldanys.map(y=>
-            document.getElementById("selectDiv_"+y.id)).map(x=> x?x.style.backgroundColor="lightgray":"");
+            document.getElementById("selectDiv_"+y.id)).map(x=> x?x.classList.remove(styles.activepeldanyDiv):"");
         setSelectedPeldanys([]);
     }
 
-
-
-    useEffect(() => {
-        Load();
-    }, []);
 
     useEffect(() => {
         console.log(selectedPeldanys);
@@ -86,25 +83,40 @@ export function RendelesHozzarendelDialog({isOpen, setIsOpen, rendeles}: Rendele
         if (dialogRef.current) {
             if (isOpen) {
                 dialogRef.current.showModal();
+                Load();
             } else {
                 dialogRef.current.close();
             }
         }
     }, [isOpen]);
 
+    useEffect(() => {
+        if (!okButtonRef.current) return;
+
+
+        if (selectedPeldanys.length === 0)
+            okButtonRef.current.disabled = true;
+
+        else
+            okButtonRef.current.disabled = false;
+    }, [selectedPeldanys]);
+
 
     return (
         <dialog className={styles.root} ref={dialogRef} onClose={() =>setIsOpen(false)}>
-            <p>Hozzárendelt: {selectedPeldanys.length+rendeles.completedQuantity}/{rendeles.quantity}</p>
-
-            {peldanys?.map(x=>
+            <p className={styles.hozzaRendeltP}>Hozzárendelt: {selectedPeldanys.length+rendeles.completedQuantity}/{rendeles.quantity}</p>
+            {
+                (!peldanys || peldanys.length === 0)?
+                    <div><h1 className={styles.noPeldanyh1}>Nincs hozzáadható példány!</h1></div>
+                :
+                peldanys?.map(x=>
                 <div key={x.id} id={"selectDiv_"+x.id} className={styles.peldanyDiv}
                      onClick={(e) =>{
                          if (selectedPeldanys.map(y=>y.id).includes(x.id))
                          {
                              //listából kivétel
                              setSelectedPeldanys(prev => prev.filter(y=>y.id !== x.id));
-                             e.currentTarget.style.backgroundColor="lightgray"
+                             e.currentTarget.classList.remove(styles.activepeldanyDiv);
                          }
                          else if (rendeles.quantity == selectedPeldanys.length+rendeles.completedQuantity) {
                              alert("Rendelési mennyiség elérve! Nem adhatsz többet hozzá!")
@@ -114,7 +126,7 @@ export function RendelesHozzarendelDialog({isOpen, setIsOpen, rendeles}: Rendele
                          {
                              //hozzáadás
                              setSelectedPeldanys([...selectedPeldanys,x]);
-                             e.currentTarget.style.backgroundColor="green"
+                             e.currentTarget.classList.add(styles.activepeldanyDiv);
                          }
                      }}
                 >
@@ -127,7 +139,7 @@ export function RendelesHozzarendelDialog({isOpen, setIsOpen, rendeles}: Rendele
                     ResetSelectedPeldanys();
                 }}>Mégse</button>
 
-                <button className={styles.okButton} onClick={CreateKolcsonzesek}>Megerősítés</button>
+                <button ref={okButtonRef} className={styles.okButton} onClick={CreateKolcsonzesek}>Megerősítés</button>
             </div>
         </dialog>
 
