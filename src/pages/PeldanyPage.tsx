@@ -15,20 +15,28 @@ export function PeldanyPage()
     const [data, setData] = useState<PeldanyReadDto[] | null>();
     //const [searchquery, setSearchquery] = useState("");
     const navigate = useNavigate();
+    const [pageNumber, setPageNumber] = useState(1);
+    const [maxPage, setMaxPage] =useState(1);
+    const limit:number = 24;
 
     useEffect(() => {
         console.log("Fut a cuccos!");
         load();
-    }, [])
+    }, [pageNumber]);
 
     async function load() {
         console.log("Kapott paraméter az URL-ből:", peldanyTypeId);
         if (!peldanyTypeId) return;
 
         try {
-            let result = await peldanyService.getByTypeId(peldanyTypeId);
+            let result = await peldanyService.getByTypeId(peldanyTypeId, limit, limit * (pageNumber - 1));
             console.log("API válasz:", result);
             setData(result);
+            let allPeldany = await peldanyService.peldanyCounter(peldanyTypeId);
+            setMaxPage(Math.ceil(allPeldany / limit));
+            console.log(`Az összes oldal száma: ${maxPage}`);
+            console.log(`Adatok mennyisége: ${result.length}`);
+            console.log(`Tényleg az össz mennyiség: ${allPeldany}`);
         } catch (error) {
             console.error("Hiba a lekérés során:", error);
         }
@@ -45,7 +53,7 @@ export function PeldanyPage()
             <NavBar onSearchQueryChange={()=>{}} />
             {
                 (data && data !== null)?
-                    <DataGrid caption={"Single példány"} data={data} clickEvent={ClickedOnSingle} showColums={[true,false,true, true, false, false, false, false, false, false, false, false, false, false]}/>
+                    <DataGrid caption={"Single példány"} data={data} clickEvent={ClickedOnSingle} pageNumber={pageNumber} maxPageNumber={maxPage} setPageNumber={setPageNumber} showColums={[true,false,true, true, false, false, false, false, false, false, false, false, false, false]}/>
                     :
                     <p>Betöltés...</p>
             }

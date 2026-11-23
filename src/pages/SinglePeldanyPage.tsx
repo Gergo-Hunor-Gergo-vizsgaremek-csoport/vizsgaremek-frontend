@@ -2,22 +2,30 @@ import {Container} from "inversify";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {useParams} from "react-router";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
 //import {NavBar} from "../components/NavBar.tsx";
+import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
 import {PeldanyService} from "../services/PeldanyService.ts";
+import {TypeService} from "../services/TypeService.ts";
 import styles from "./SinglePeldanyPage.module.scss";
 
 export function SinglePeldanyPage()
 {
     const services: Container = useContainer();
     const {peldanyId} = useParams();
+    const navigate = useNavigate();
     const [peldany,setPeldany] = useState<PeldanyReadDto>();
+    const [peldanyType, setType] = useState<TypeReadDto>();
+    const [peldanyList, setPeldanyList] = useState<PeldanyReadDto[]>([]);
     const peldanyService: PeldanyService = services.get(PeldanyService);
+    const typeService: TypeService = services.get(TypeService);
 
     useEffect(() => {
         console.log("Alagút az éjszaka, fut a vonat!");
         Load();
-    }, []);
+    }, [useParams()]);
+
 
     async function Load()
     {
@@ -33,19 +41,58 @@ export function SinglePeldanyPage()
         {
             setPeldany(result);
             console.log(peldany);
+
+            let type = await typeService.get(result.typeId);
+            setType(type);
+
+            let count = await peldanyService.peldanyCounter(result.typeId);
+            console.log(`Íme a counter eredménye: ${count}`);
+
+            let list = await peldanyService.getByTypeId(result.typeId,count,0);
+            setPeldanyList(list);
+            console.log(`Példány lista tartalmának száma: ${peldanyList.length}`);
+            console.log(`Tartalom: ${list}`);
+            console.log(`Mutatott példány helye a listában? ${list.map(x=>x.id).indexOf(result.id)}`);
+            console.log(`Mutatott példány helye a listában? ${list.indexOf(result)}`);
+            console.log(`Ugrani akarok ide: ${list.map(x=>x.id).indexOf(result.id) + 1}`);
+
         }
     }
 
-    if (!peldany || !peldany.id)
+    function PageTurner()
+    {
+        if(peldany)
+        {
+            let place = peldanyList.map(x => x.id).indexOf(peldany.id);
+            console.log(`Ez az aktuális oldal id-je: ${place}`);
+            navigate(`/single/${peldanyList[place + 1].id}`, {replace: true});
+            console.log(`Ez ide mutat: ${peldanyList[place + 1].id}`);
+        }
+    }
+
+    function PageBackTurner()
+    {
+        if(peldany)
+        {
+            let place = peldanyList.map(x => x.id).indexOf(peldany.id);
+            console.log(`Ez az aktuális oldal id-je: ${place}`);
+            navigate(`/single/${peldanyList[place - 1].id}`, {replace: true});
+            console.log(`Ez ide vissza mutat: ${peldanyList[place + 1].id}`);
+        }
+    }
+
+    if (!peldany || !peldany.id || !peldanyType || !peldanyType.id)
     {
         return (<></>)
     }
 
     return(
         <div className={styles.root}>
-            <h1>{peldany.id}</h1>
+            <button onClick={PageTurner}>Következő</button>
+            <button onClick={PageBackTurner}>Vissza</button>
+            <h1>{peldanyType.name}</h1>
             <div className={styles.mainDiv}>
-                <img alt="image" src={"https://placehold.co/150"}/>
+                <img alt="image" src={peldanyType.icon ?? "https://placehold.co/150"}/>
                 <table>
                     <caption><h2>Description</h2></caption>
                     <thead>
@@ -58,15 +105,15 @@ export function SinglePeldanyPage()
                     <tbody>
                     <tr>
                         <th>Type</th>
-                        <td>{peldany.typeId}</td>
+                        <td>{peldany.id}</td>
                     </tr>
 
                     <tr>
                         <th>Serialnumber</th>
                         {
                             (peldany.serialNumber === "string")
-                                ?<td>Ismeretlen</td>
-                                :<td>{peldany.serialNumber}</td>
+                                ? <td>Ismeretlen</td>
+                                : <td>{peldany.serialNumber}</td>
                         }
                     </tr>
                     </tbody>
