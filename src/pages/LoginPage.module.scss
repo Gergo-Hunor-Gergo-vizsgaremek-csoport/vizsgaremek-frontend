@@ -39,6 +39,9 @@
     background-color: index.$surface;
     color: index.$text;
 
+    &:focus-visible {
+      outline: 2px solid index.$accent;
+    }
     &::placeholder
     {
       color: index.$faint;
