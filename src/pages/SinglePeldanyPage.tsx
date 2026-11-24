@@ -81,6 +81,14 @@ export function SinglePeldanyPage()
         }
     }
 
+    function ShowParentPeldany()
+    {
+        if(peldany)
+        {
+            navigate(`/single/${peldany.parentId}`, {replace: true});
+        }
+    }
+
     if (!peldany || !peldany.id || !peldanyType || !peldanyType.id)
     {
         return (<></>)
@@ -92,6 +100,12 @@ export function SinglePeldanyPage()
                 <button onClick={PageBackTurner}>&laquo;</button>
                 <button onClick={PageTurner}>&raquo;</button>
             </div>
+            {peldany.parentId != null && (
+                <div>
+                    <button onClick={ShowParentPeldany}>Parent megtekintése</button>
+                    <p>Ez a példány egy kollekció része!</p>
+                </div>
+            )}
             <h1>{peldanyType.name}</h1>
             <div className={styles.mainDiv}>
                 <img alt="image" src={peldanyType.icon ?? "https://placehold.co/150"}/>

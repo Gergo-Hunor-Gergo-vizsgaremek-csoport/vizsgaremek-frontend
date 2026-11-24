@@ -8,5 +8,7 @@ export interface PeldanyReadDto {
     isHibas: boolean;
     isSelejt: boolean;
     isSelejtSugg: boolean;
+    parentId: string;
+    children: PeldanyReadDto[];
     selectedDate: Date;
 }
