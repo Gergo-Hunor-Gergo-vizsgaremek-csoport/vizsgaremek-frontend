@@ -64,8 +64,7 @@
   .dashboardGrid {
     display: grid;
     grid-template-columns: 360px 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: "info table""info assign";
+    grid-template-areas: "info assign";
     gap: 24px;
     align-items: start;
   }
@@ -252,10 +251,15 @@
       font-weight: 600;
       cursor: pointer;
       transition: background-color 0.2s, transform 0.1s;
-    }
 
-    .btnAssign:hover {
-      filter: brightness(70%);
+      .btnAssign:hover {
+        filter: brightness(70%);
+      }
+
+      &:disabled{
+        background-color: color-mix(index.$success 50%, index.$muted);
+        cursor: default;
+      }
     }
 
     .helperNote {

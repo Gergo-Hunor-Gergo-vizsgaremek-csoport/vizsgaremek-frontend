@@ -33,9 +33,9 @@ export class RendelesService {
         return this.api.put<RendelesReadDto>(`/Rendeles/${id}`, rendelesWriteDto);
     }
 
-    async assignKolcsonzesek(
+    async assignKolcsonzes(
         id: string,
-        kolcsonzesWriteDtos: KolcsonzesWriteDto[],
+        kolcsonzesWriteDtos: KolcsonzesWriteDto,
     )
     {
         return this.api.post<KolcsonzesReadDto[]>(`/Rendeles/${id}/assign`, kolcsonzesWriteDtos);
