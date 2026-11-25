@@ -2,7 +2,6 @@ import {inject, injectable} from "inversify";
 import { ApiService } from "./ApiService";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
 import type {PeldanyWriteDto} from "../dtos/PeldanyWriteDto.ts";
-//import type {PeldanyUpdateDto} from "../dtos/PeldanyUpdateDto.ts";
 
 @injectable()
 export class PeldanyService {
@@ -29,6 +28,14 @@ export class PeldanyService {
         q:string
     ): Promise<number> {
         return this.api.get<number>(`/Peldany/count?q=${q}`);
+    }
+
+    async getChildren(
+        id:string,
+        limit?:number,
+        offset?:number
+    ): Promise<PeldanyReadDto[]>{
+        return this.api.get<PeldanyReadDto[]>(`/Peldany/${id}/children?limit=${limit}&offset=${offset}`);
     }
 
     /*async search(

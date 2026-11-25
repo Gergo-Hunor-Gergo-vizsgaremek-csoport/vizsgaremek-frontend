@@ -9,22 +9,27 @@ import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
 import {PeldanyService} from "../services/PeldanyService.ts";
 import {TypeService} from "../services/TypeService.ts";
 import styles from "./SinglePeldanyPage.module.scss";
+import {DataGrid} from "../components/DataGrid.tsx";
 
 export function SinglePeldanyPage()
 {
     const services: Container = useContainer();
+    const peldanyService: PeldanyService = services.get(PeldanyService);
+    const typeService: TypeService = services.get(TypeService);
     const {peldanyId} = useParams();
     const navigate = useNavigate();
     const [peldany,setPeldany] = useState<PeldanyReadDto>();
     const [peldanyType, setType] = useState<TypeReadDto>();
     const [peldanyList, setPeldanyList] = useState<PeldanyReadDto[]>([]);
-    const peldanyService: PeldanyService = services.get(PeldanyService);
-    const typeService: TypeService = services.get(TypeService);
+    const [children, setChildren] = useState<PeldanyReadDto[]>([]);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [maxPage, setMaxPage] =useState(1);
+    const childLimit:number = 10;
 
     useEffect(() => {
         console.log("Alagút az éjszaka, fut a vonat!");
         Load();
-    }, [useParams()]);
+    }, [useParams(), pageNumber]);
 
 
     async function Load()
@@ -50,11 +55,13 @@ export function SinglePeldanyPage()
 
             let list = await peldanyService.getByTypeId(result.typeId,count,0);
             setPeldanyList(list);
-            console.log(`Példány lista tartalmának száma: ${peldanyList.length}`);
-            console.log(`Tartalom: ${list}`);
-            console.log(`Mutatott példány helye a listában? ${list.map(x=>x.id).indexOf(result.id)}`);
-            console.log(`Mutatott példány helye a listában? ${list.indexOf(result)}`);
-            console.log(`Ugrani akarok ide: ${list.map(x=>x.id).indexOf(result.id) + 1}`);
+
+            console.log(childLimit, pageNumber);
+            let childList = await peldanyService.getChildren(result.id, childLimit, childLimit * (pageNumber - 1));
+            setChildren(childList);
+            console.log(`Neki ezek a gyermekei vannak: ${childList}`);
+            setMaxPage(Math.ceil(childList.length / childLimit));
+
 
         }
     }
@@ -86,6 +93,14 @@ export function SinglePeldanyPage()
         if(peldany)
         {
             navigate(`/single/${peldany.parentId}`, {replace: true});
+        }
+    }
+
+    function NavigetToChild(id:string)
+    {
+        if(peldany)
+        {
+            navigate(`/single/${id}`, {replace: true});
         }
     }
 
@@ -134,6 +149,12 @@ export function SinglePeldanyPage()
                     </tr>
                     </tbody>
                 </table>
+                {children !== null &&(
+                    (children)?
+                        <DataGrid caption={"Kollekció"} data={children} clickEvent={NavigetToChild} pageNumber={pageNumber} maxPageNumber={maxPage} setPageNumber={setPageNumber} showColums={[true,false,true, true, false, false, false, false, false, false, false, false, false, false]}/>
+                        :
+                        <p>Betöltés...</p>
+                )}
                 <div className={styles.descText}>
                     <p>{peldany.description}</p>
                 </div>
