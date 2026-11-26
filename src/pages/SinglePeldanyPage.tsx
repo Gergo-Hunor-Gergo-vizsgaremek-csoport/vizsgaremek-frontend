@@ -23,6 +23,7 @@ export function SinglePeldanyPage()
     const [children, setChildren] = useState<PeldanyReadDto[]>([]);
     const [pageNumber, setPageNumber] = useState(1);
     const [maxPage, setMaxPage] =useState(1);
+    const [clickedChild, setClickedChild] = useState(false);
     const childLimit:number = 10;
 
     useEffect(() => {
@@ -83,6 +84,24 @@ export function SinglePeldanyPage()
         }
     }
 
+    function ChildPageTurner()
+    {
+        if(peldany)
+        {
+            let place = children.map(x => x.id).indexOf(peldany.id);
+            navigate(`/single/${peldanyList[place + 1].id}`, {replace: true});
+        }
+    }
+
+    function ChildPageBackTurner()
+    {
+        if(peldany)
+        {
+            let place = peldanyList.map(x => x.id).indexOf(peldany.id);
+            navigate(`/single/${peldanyList[place - 1].id}`, {replace: true});
+        }
+    }
+
     function ShowParentPeldany()
     {
         if(peldany)
@@ -96,6 +115,7 @@ export function SinglePeldanyPage()
         if(peldany)
         {
             navigate(`/single/${id}`, {replace: true});
+            setClickedChild(true);
         }
     }
 
@@ -106,10 +126,18 @@ export function SinglePeldanyPage()
 
     return(
         <div className={styles.root}>
-            <div className={styles.topNavigation}>
-                <button onClick={PageBackTurner}>&laquo;</button>
-                <button onClick={PageTurner}>&raquo;</button>
-            </div>
+            {!clickedChild &&(
+                <div className={styles.topNavigation}>
+                    <button onClick={PageBackTurner}>&laquo;</button>
+                    <button onClick={PageTurner}>&raquo;</button>
+                </div>
+            )}
+            {clickedChild &&(
+                <div className={styles.topNavigation}>
+                    <button onClick={ChildPageBackTurner}>&laquo;</button>
+                    <button onClick={ChildPageTurner}>&raquo;</button>
+                </div>
+            )}
             {peldany.parentId != null && (
                 <div>
                     <button onClick={ShowParentPeldany}>Parent megtekintése</button>
