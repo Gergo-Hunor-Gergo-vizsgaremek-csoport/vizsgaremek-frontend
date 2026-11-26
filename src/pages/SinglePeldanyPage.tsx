@@ -3,7 +3,6 @@ import {useContainer} from "../services/ServiceContext.tsx";
 import {useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
-//import {NavBar} from "../components/NavBar.tsx";
 import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
 import {PeldanyService} from "../services/PeldanyService.ts";
@@ -45,22 +44,22 @@ export function SinglePeldanyPage()
         if (result)
         {
             setPeldany(result);
-            console.log(peldany);
 
             let type = await typeService.get(result.typeId);
             setType(type);
 
             let count = await peldanyService.peldanyCounter(result.typeId);
-            console.log(`Íme a counter eredménye: ${count}`);
 
             let list = await peldanyService.getByTypeId(result.typeId,count,0);
             setPeldanyList(list);
 
-            console.log(childLimit, pageNumber);
             let childList = await peldanyService.getChildren(result.id, childLimit, childLimit * (pageNumber - 1));
             setChildren(childList);
-            console.log(`Neki ezek a gyermekei vannak: ${childList}`);
-            setMaxPage(Math.ceil(childList.length / childLimit));
+            console.log(`Neki ezek a gyermekei vannak: ${childList.map(c=>c.id)}`);
+
+            let childrenCount = await peldanyService.childrenCounter(result.id);
+            setMaxPage(Math.ceil(childrenCount / childLimit));
+            console.log(`Na itten van az aktuális childList hosszúsága, ebből kéne kiszámolni, hogy mennyi oldal lehet összesen: `);
 
 
         }
@@ -71,9 +70,7 @@ export function SinglePeldanyPage()
         if(peldany)
         {
             let place = peldanyList.map(x => x.id).indexOf(peldany.id);
-            console.log(`Ez az aktuális oldal id-je: ${place}`);
             navigate(`/single/${peldanyList[place + 1].id}`, {replace: true});
-            console.log(`Ez ide mutat: ${peldanyList[place + 1].id}`);
         }
     }
 
@@ -82,9 +79,7 @@ export function SinglePeldanyPage()
         if(peldany)
         {
             let place = peldanyList.map(x => x.id).indexOf(peldany.id);
-            console.log(`Ez az aktuális oldal id-je: ${place}`);
             navigate(`/single/${peldanyList[place - 1].id}`, {replace: true});
-            console.log(`Ez ide vissza mutat: ${peldanyList[place + 1].id}`);
         }
     }
 

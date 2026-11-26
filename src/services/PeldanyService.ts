@@ -38,6 +38,13 @@ export class PeldanyService {
         return this.api.get<PeldanyReadDto[]>(`/Peldany/${id}/children?limit=${limit}&offset=${offset}`);
     }
 
+    async childrenCounter(
+        id: string
+    ): Promise<number> {
+        return this.api.get<number>(`/Peldany/${id}/children/count`);
+    }
+
+
     /*async search(
         q?: string,
         limit?: number,

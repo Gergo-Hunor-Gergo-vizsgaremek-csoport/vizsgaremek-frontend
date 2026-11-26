@@ -13,12 +13,10 @@ export function PeldanyPage()
     const {peldanyTypeId} = useParams();
     const peldanyService = services.get(PeldanyService);
     const [data, setData] = useState<PeldanyReadDto[] | null>();
-    const [searchquery, setSearchquery] = useState("");
     const navigate = useNavigate();
     const [pageNumber, setPageNumber] = useState(1);
     const [maxPage, setMaxPage] =useState(1);
     const limit:number = 24;
-    //const searchLimit: number = 10;
 
     useEffect(() => {
         console.log("Fut a cuccos!");
@@ -36,8 +34,7 @@ export function PeldanyPage()
 
             let allPeldany = await peldanyService.peldanyCounter(peldanyTypeId);
             setMaxPage(Math.ceil(allPeldany / limit));
-
-            console.log(`Ez pedig a searchquery: ${searchquery} Bitch!`);
+            console.log(`Hát ezek vagy ennyi az oldal álltal megjelenítendő cuccos: ${allPeldany}`);
         } catch (error) {
             console.error("Hiba a lekérés során:", error);
         }
@@ -51,7 +48,7 @@ export function PeldanyPage()
 
     return (
         <>
-            <NavBar onSearchQueryChange={setSearchquery} />
+            <NavBar onSearchQueryChange={()=>{}} />
             {
                 (data && data !== null)?
                     <DataGrid caption={"Single példány"} data={data} clickEvent={ClickedOnSingle} pageNumber={pageNumber} maxPageNumber={maxPage} setPageNumber={setPageNumber} showColums={[true,false,true, true, false, false, false, false, false, false, false, false, false, false]}/>
