@@ -64,7 +64,7 @@ export function NavBar({onSearchQueryChange}: NavBarProps) {
                 (isLoggedIn)?
                     <div ref={menuRef} className={styles.navbarItem} onClick={() =>{(open)?setOpen(false):setOpen(true);}} style={{position:"relative"}}><i className={`material-icons ${styles.personIcon}`}>person_outline</i>
 
-                        <div className={styles.dropdownMenu} style={{display:`${(open)?"block":"none"}`, position:"absolute", left:0}}>
+                        <div className={styles.dropdownMenu} style={{display:`${(open)?"block":"none"}`, position:"absolute", left:0, zIndex:9999}}>
                             <ul style={{listStyleType:"none", margin:"0",padding:"0", width:"max-content", display:"grid", gridAutoFlow:"row"}} >
                                 <li className={styles.navbarDropdownItem}><a href={"/user/:AKTUALISUSERID"}>Aktuális felhasználó</a></li>
                                 <li className={styles.navbarDropdownItem}><a href={"/me/rendelesek"}>Rendeléseim</a></li>
