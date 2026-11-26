@@ -1,5 +1,5 @@
 import {useParams} from "react-router";
-import {useState, useEffect, useRef, type ChangeEvent} from "react";
+import {useState, useEffect, useRef} from "react";
 import type {RendelesReadDto} from "../dtos/RendelesReadDto.ts";
 import {useContainer} from "../services/ServiceContext.tsx";
 import {RendelesService} from "../services/RendelesService.ts";
@@ -8,16 +8,11 @@ import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import styles from "../pages/RendelesPage.module.scss"
 import {NavBar} from "../components/NavBar.tsx";
 import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
-import {PeldanyService} from "../services/PeldanyService.ts";
 import type {KolcsonzesWriteDto} from "../dtos/KolcsonzesWriteDto.ts";
-import type {RendelesWriteDto} from "../dtos/RendelesWriteDto.ts";
-import {KolcsonzesService} from "../services/KolcsonzesService.ts";
 
 export function RendelesPage() {
     const services = useContainer();
     const rendelesService = services.get(RendelesService);
-    const peldanyService = services.get(PeldanyService);
-    const kolcsonzesService = services.get(KolcsonzesService);
     const typeService = services.get(TypeService);
     const {rendelesId} = useParams();
 
@@ -38,6 +33,7 @@ export function RendelesPage() {
         }
         let resultRendeles:RendelesReadDto = await rendelesService.get(rendelesId);
         setRendeles(resultRendeles);
+
         let resultType:TypeReadDto = await typeService.get(resultRendeles.typeId);
         setTypeName(resultType.name);
 
@@ -48,6 +44,19 @@ export function RendelesPage() {
     useEffect(() => {
         Load();
     }, []);
+
+    useEffect(() => {
+       if (!rendeles) return;
+       if (!selectRef.current) return;
+
+       if (rendeles.completedQuantity === rendeles.quantity || selectRef.current.selectedIndex === 0) {
+           setDisabled(true);
+       }
+       else
+       {
+           setDisabled(false);
+       }
+    }, [rendeles,selectRef.current?.selectedIndex]);
 
     async function CreateKolcsonzes()
     {
@@ -78,17 +87,11 @@ export function RendelesPage() {
         Load();
     }
 
-    function UpdateSelection(e: React.ChangeEvent<HTMLSelectElement>)
+    function UpdateSelection()
     {
+        if (!selectRef.current || selectRef.current.selectedIndex === 0) return;
 
-        if (e.currentTarget.selectedIndex === 0)
-        {
-            setDisabled(true);
-            return;
-        }
-
-        setDisabled(false);
-        let selectedOption:HTMLOptionElement = e.currentTarget.selectedOptions[0];
+        let selectedOption:HTMLOptionElement = selectRef.current.selectedOptions[0];
         setSelectedPeldany(JSON.parse(selectedOption.dataset.peldany as string) as PeldanyReadDto);
     }
 
@@ -144,17 +147,17 @@ export function RendelesPage() {
                         <div className={styles.assignPanel}>
                             <h2 className={styles.panelTitle}>Új példány hozzárendelése</h2>
                             <div className={styles.assignDiv}>
-                                <select ref={selectRef} className={styles.selectInput} onChange={e =>UpdateSelection(e)}>
-                                    <option>Válassz szabad példányt a raktárból...</option>
+                                <select ref={selectRef} className={styles.selectInput} onChange={UpdateSelection}>
+                                    <option selected={true} disabled={true} hidden={true}>Válassz szabad példányt a raktárból...</option>
                                     {peldanys?.map(x=>
                                             <option data-peldany={JSON.stringify(x)}>{x.serialNumber}</option>
                                     )}
                                 </select>
-                                <button className={styles.btnAssign} onClick={CreateKolcsonzes} disabled={disabled} /*disabled={!selectRef.current || selectRef.current.selectedIndex === 0}*/>Hozzárendelés</button>
+                                <button className={styles.btnAssign} onClick={CreateKolcsonzes} disabled={disabled}>Hozzárendelés</button>
                             </div>
                             {(rendeles.completedQuantity === rendeles.quantity)?
                             <p className={styles.helperNote}>
-                                A rendeléshez tartozó összes példány ({rendeles.completedQuantity}/{rendeles.completedQuantity}) már ki lett osztva. Újabb tétel hozzáadásához előbb válassz le egy meglévőt.
+                                A rendeléshez tartozó összes példány ({rendeles.completedQuantity}/{rendeles.completedQuantity}) már ki lett osztva.
                             </p>:<></>
                             }
                         </div>
