@@ -20,8 +20,6 @@
   }
 
   table {
-    justify-self: center;
-    align-self: center;
     color: index.$text;
     border-collapse: collapse;
     text-align: center;
@@ -39,6 +37,8 @@
     background: index.$elevated;
     font-weight: bold;
     padding: 0 1rem;
+    position: sticky;
+    top: 0;
   }
 
 
@@ -68,7 +68,6 @@
       background-color: index.$accent-hover;
       color: index.$on-accent;
     }
-
   }
 
   thead
