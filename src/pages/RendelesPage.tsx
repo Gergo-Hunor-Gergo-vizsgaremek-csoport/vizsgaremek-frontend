@@ -6,59 +6,99 @@ import {RendelesService} from "../services/RendelesService.ts";
 import {TypeService} from "../services/TypeService.ts";
 import type {TypeReadDto} from "../dtos/TypeReadDto.ts";
 import styles from "../pages/RendelesPage.module.scss"
-import {RendelesHozzarendelDialog} from "../components/RendelesHozzarendelDialog.tsx";
 import {NavBar} from "../components/NavBar.tsx";
+import type {PeldanyReadDto} from "../dtos/PeldanyReadDto.ts";
+import type {KolcsonzesWriteDto} from "../dtos/KolcsonzesWriteDto.ts";
 
 export function RendelesPage() {
     const services = useContainer();
     const rendelesService = services.get(RendelesService);
     const typeService = services.get(TypeService);
     const {rendelesId} = useParams();
+
+    let selectRef = useRef<HTMLSelectElement>(null);
+
+    const [disabled,setDisabled] = useState<boolean>(true);
+
     const [rendeles,setRendeles] = useState<RendelesReadDto>();
-    let rendelesRef = useRef<RendelesReadDto>(rendeles);
     const [typeName,setTypeName] = useState<string>("");
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [selectedPeldany,setSelectedPeldany] = useState<PeldanyReadDto>();
+    const [peldanys,setPeldanys] = useState<PeldanyReadDto[]>();
+
 
     async function Load() {
-        console.log("Load Rendeles");
         if (!rendelesId)
         {
             return;
         }
         let resultRendeles:RendelesReadDto = await rendelesService.get(rendelesId);
-        console.log(resultRendeles.typeId);
         setRendeles(resultRendeles);
+
         let resultType:TypeReadDto = await typeService.get(resultRendeles.typeId);
         setTypeName(resultType.name);
-        rendelesRef.current = rendeles;
+
+        let resultPeldanys = await typeService.getPeldanyok(resultType.id,50,0);
+        setPeldanys(resultPeldanys);
     }
 
     useEffect(() => {
         Load();
-    }, [isOpen]);
+    }, []);
+
+    useEffect(() => {
+       if (!rendeles) return;
+       if (!selectRef.current) return;
+
+       if (rendeles.completedQuantity === rendeles.quantity || selectRef.current.selectedIndex === 0) {
+           setDisabled(true);
+       }
+       else
+       {
+           setDisabled(false);
+       }
+    }, [rendeles,selectRef.current?.selectedIndex]);
+
+    async function CreateKolcsonzes()
+    {
+        if (selectRef.current === null) return;
+        if (!rendeles) return;
+        if (!selectedPeldany) return;
+
+        let expirationDate = new Date();
+        // 1 hónap múlva jár le
+        expirationDate.setMonth(expirationDate.getMonth() + 1);
+
+        let kolcsonzesWriteDto: KolcsonzesWriteDto = {
+            peldanyId: selectedPeldany.id,
+            userId: rendeles.userId,
+            date: new Date(),
+            expirationDate: expirationDate
+        }
+
+        await rendelesService.assignKolcsonzes(rendeles.id,kolcsonzesWriteDto);
+
+        if (selectRef.current)
+        {
+            selectRef.current.selectedIndex = 0;
+            setDisabled(true);
+        }
+
+
+        Load();
+    }
+
+    function UpdateSelection()
+    {
+        if (!selectRef.current || selectRef.current.selectedIndex === 0) return;
+
+        let selectedOption:HTMLOptionElement = selectRef.current.selectedOptions[0];
+        setSelectedPeldany(JSON.parse(selectedOption.dataset.peldany as string) as PeldanyReadDto);
+    }
 
     if (!rendeles)
     {
         return null;
     }
-
-    /*return (
-        <>
-            <NavBar />
-            <div className={styles.root}>
-                <p>USERID: {rendeles?.userId}</p>
-                <p>Típus: {typeName}</p>
-                <p>Rendelés dátuma: {(rendeles?.date)?new Date(rendeles.date).toLocaleDateString("hu"):"ismeretlen"}</p>
-                <p>Hozzárendelt: {rendeles?.completedQuantity}/{rendeles?.quantity}</p>
-
-                <button className={styles.hozzaRendelButton} onClick={() => {
-                    setIsOpen(true);
-                }}>Hozzárendelés</button>
-            </div>
-
-            <RendelesHozzarendelDialog isOpen={isOpen} setIsOpen={setIsOpen} rendeles={rendeles}/>
-        </>
-    )*/
 
         return (
         <>
@@ -75,12 +115,12 @@ export function RendelesPage() {
 
                     <div className={styles.dashboardGrid}>
                         {/* Bal oszlop: Rendelés adatai */}
-                        <aside className={styles.panel}>
+                        <div className={styles.infoPanel}>
                             <h2 className={styles.panelTitle}>Rendelés adatai</h2>
 
                             <div className={styles.infoGroup}>
                                 <span className={styles.infoLabel}>Termék típusa</span>
-                                <div className={`${styles.infoValue} ${styles.productName}`}>{typeName}</div>
+                                <div className={styles.infoValue}>{typeName}</div>
                             </div>
 
                             <div className={styles.infoGroup}>
@@ -90,7 +130,7 @@ export function RendelesPage() {
 
                             <div className={styles.infoGroup}>
                                 <span className={styles.infoLabel}>Felhasználó azonosító (USERID)</span>
-                                <div className={styles.uuidBox}>a96fc0e578bb48d1Acbc5bb6006c0d86</div>
+                                <div className={styles.uuidBox}>{rendeles.userId}</div>
                             </div>
 
                             <div className={styles.progressSection}>
@@ -98,67 +138,29 @@ export function RendelesPage() {
                                     <span className={styles.textMuted}>Teljesítési állapot</span>
                                     <strong>{rendeles.completedQuantity} / {rendeles.quantity} példány</strong>
                                 </div>
-                                <div className={styles.progressTrack}>
+                                <div className={styles.progressTrack} style={{width:(100*rendeles.completedQuantity/rendeles.quantity)+'%'}} >
                                     <div className={styles.progressFill} />
                                 </div>
                             </div>
-                        </aside>
+                        </div>
 
-                        {/* Jobb oszlop: Példányok listája és hozzárendelés */}
-                        <section>
-                            {/* Már hozzárendelt tételek */}
-                            <div className={styles.panel}>
-                                <h2 className={styles.panelTitle}>Kiosztott példányok</h2>
-
-                                <div className={styles.tableWrapper}>
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th>Példány sorozatszám</th>
-                                            <th>Raktári pozíció</th>
-                                            <th>Kiosztva</th>
-                                            <th className={styles.textRight}>Művelet</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td><span className={styles.serialCode}>SNOA20260041</span></td>
-                                            <td>ASor / 04. polc</td>
-                                            <td className={styles.textMuted}>2026. 11. 23.</td>
-                                            <td className={styles.textRight}>
-                                                <button className={styles.btnRemove}>Leválasztás</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span className={styles.serialCode}>SNOA20260089</span></td>
-                                            <td>ASor / 04. polc</td>
-                                            <td className={styles.textMuted}>2026. 11. 23.</td>
-                                            <td className={styles.textRight}>
-                                                <button className={styles.btnRemove}>Leválasztás</button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div className={styles.assignPanel}>
+                            <h2 className={styles.panelTitle}>Új példány hozzárendelése</h2>
+                            <div className={styles.assignDiv}>
+                                <select ref={selectRef} className={styles.selectInput} onChange={UpdateSelection}>
+                                    <option selected={true} disabled={true} hidden={true}>Válassz szabad példányt a raktárból...</option>
+                                    {peldanys?.map(x=>
+                                            <option data-peldany={JSON.stringify(x)}>{x.serialNumber}</option>
+                                    )}
+                                </select>
+                                <button className={styles.btnAssign} onClick={CreateKolcsonzes} disabled={disabled}>Hozzárendelés</button>
                             </div>
-
-
-                            <div className={styles.panel}>
-                                <h2 className={styles.panelTitle}>Új példány hozzárendelése</h2>
-                                <form className={styles.assignForm}>
-                                    <select className={styles.selectInput} defaultValue="">
-                                        <option value="">Válassz szabad példányt a raktárból...</option>
-                                        <option value={104}>SNOA20260104 (ASor / 05. polc)</option>
-                                        <option value={112}>SNOA20260112 (BSor / 01. polc)</option>
-                                        <option value={119}>SNOA20260119 (BSor / 02. polc)</option>
-                                    </select>
-                                    <button className={styles.btnAssign}>Hozzárendelés</button>
-                                </form>
-                                <p className={styles.helperNote}>
-                                    A rendeléshez tartozó összes példány (2/2) már ki lett osztva. Újabb tétel hozzáadásához előbb válassz le egy meglévőt.
-                                </p>
-                            </div>
-                        </section>
+                            {(rendeles.completedQuantity === rendeles.quantity)?
+                            <p className={styles.helperNote}>
+                                A rendeléshez tartozó összes példány ({rendeles.completedQuantity}/{rendeles.completedQuantity}) már ki lett osztva.
+                            </p>:<></>
+                            }
+                        </div>
                     </div>
             </div>
         </>

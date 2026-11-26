@@ -45,9 +45,11 @@ export class TypeService {
     }
 
     async getPeldanyok(
-        id: string
+        id: string,
+        limit?: number,
+        offset?: number
     ):Promise<PeldanyReadDto[]> {
-        return this.api.get<PeldanyReadDto[]>(`/Type/${id}/peldanyok`);
+        return this.api.get<PeldanyReadDto[]>(`/Type/${id}/peldanyok?limit=${limit}&offset=${offset}`);
     }
 
 }
